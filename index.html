@@ -2,30 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>0816</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0816 - AI Companion</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="app">
   <div class="topbar">
-    <div>0816</div>
-    <button onclick="startCall()">📞</button>
-    <button onclick="endCall()">❌</button>
+    <div class="status">
+      <div class="avatar">📱</div>
+      <div>
+        <div class="name">0816</div>
+        <div class="online">● Online</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="startCall()" title="Start call">📞</button>
+      <button class="icon-btn" onclick="endCall()" title="End call">❌</button>
+    </div>
   </div>
 
   <div id="chat" class="chat"></div>
 
   <div class="inputbar">
     <input type="file" id="fileInput" accept="image/*" hidden>
-    <button onclick="fileInput.click()">📎</button>
-
-    <button id="recordBtn">🎤</button>
-
-    <input id="input" placeholder="Message..."
-      onkeydown="if(event.key==='Enter') sendMessage()" />
-
-    <button onclick="sendMessage()">Send</button>
+    <button class="icon-btn" onclick="fileInput.click()" title="Upload image">📎</button>
+    <button class="icon-btn" id="recordBtn" title="Voice record">🎤</button>
+    <input id="input" type="text" placeholder="Message..." />
+    <button class="send-btn" onclick="sendMessage()" title="Send">➤</button>
   </div>
 </div>
 
