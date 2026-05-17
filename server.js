@@ -97,6 +97,7 @@ You MUST respond ONLY in valid JSON format:
 }
 
 Message types:
+console.log("Raw response:", rawResponse);
 1. "text" - Regular chat message
 2. "image" - Image URL from external source
 3. "voice" - Voice message (include textToRead and content for duration)
