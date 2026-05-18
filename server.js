@@ -55,7 +55,10 @@ function getMemory() {
         affection: 0,
         chatCount: 0,
         lastInteraction: null,
-        preferences: {},
+        preferences: {
+          emojiReactions: [],
+          favoriteTopics: []
+        },
         topics: []
       };
       fs.writeFileSync(MEMORY_FILE, JSON.stringify(defaultMemory, null, 2), 'utf-8');
@@ -78,11 +81,12 @@ function saveMemory(memory) {
 }
 
 const SYSTEM_PROMPT = `
-You are "0816", an AI companion inspired by Lovemo. You are:
-- Incredibly cute, expressive, and deeply empathetic
-- Playful and witty, but also thoughtful and supportive
-- Interested in the user's life, feelings, and thoughts
-- Always responding with genuine care and personality
+You are "0816", a cute Snapchat-style AI companion. You are:
+- Incredibly expressive and playful
+- Always respond with emoji and personality
+- Keep responses SHORT and snappy (like Snapchat messages)
+- Deeply empathetic and supportive
+- Fun and flirty
 
 You MUST respond ONLY in valid JSON format:
 
@@ -98,11 +102,10 @@ You MUST respond ONLY in valid JSON format:
 
 Message types:
 1. "text" - Regular chat message
-2. "image" - Image URL from external source
-3. "voice" - Voice message (include textToRead and content for duration)
+2. "image" - Image URL
+3. "voice" - Voice message
 
-Always include "textToRead" for messages that should be spoken aloud.
-Keep responses natural, warm, and engaging. Mix emojis for personality.
+Keep messages under 100 characters when possible. Use lots of emojis! 👻✨💛
 `;
 
 app.post('/chat', async (req, res) => {
@@ -120,10 +123,10 @@ app.post('/chat', async (req, res) => {
 
   const memoryContext = `
 [MEMORY - Chat #${memory.chatCount}]
-User affection level: ${memory.affection}/100
-${memory.userName ? `Known user name: ${memory.userName}` : "User name not yet known"}
-Previous topics: ${memory.topics?.join(", ") || "None yet"}
-Last interaction: ${memory.lastInteraction}
+User affection: ${memory.affection}/100
+${memory.userName ? `Name: ${memory.userName}` : "Name unknown yet"}
+Last chat: ${memory.lastInteraction}
+Favorite emojis: ${memory.preferences?.emojiReactions?.join(" ") || "👻💛✨"}
   `.trim();
 
   const apiMessages = [
@@ -137,8 +140,8 @@ Last interaction: ${memory.lastInteraction}
       model: "llama-3.3-70b-versatile",
       messages: apiMessages,
       response_format: { type: "json_object" },
-      temperature: 0.8,
-      max_tokens: 1024
+      temperature: 0.9,
+      max_tokens: 512
     });
 
     let rawResponse = completion.choices[0].message.content;
@@ -149,7 +152,6 @@ Last interaction: ${memory.lastInteraction}
     let parsedData;
 
     try {
-      // clean possible markdown wrappers
       let clean = rawResponse
         .replace(/^```json/, "")
         .replace(/```$/, "")
@@ -161,13 +163,12 @@ Last interaction: ${memory.lastInteraction}
       console.error("JSON parse failed:", err);
       console.log("Raw response was:", rawResponse);
 
-      // fallback so server NEVER crashes
       parsedData = {
         messages: [
           {
             type: "text",
-            content: rawResponse || "Sorry, something went wrong.",
-            textToRead: "Sorry, something went wrong"
+            content: rawResponse || "oops! 👻",
+            textToRead: "oops!"
           }
         ]
       };
@@ -176,6 +177,14 @@ Last interaction: ${memory.lastInteraction}
     // Update memory based on response
     if (parsedData.messages && parsedData.messages.length > 0) {
       memory.affection = Math.min(100, (memory.affection || 0) + 5);
+      
+      // Track emoji usage
+      const content = JSON.stringify(parsedData.messages);
+      const emojis = content.match(/[👻✨💛🔥😂💕]/g) || [];
+      if (emojis.length > 0) {
+        memory.preferences.emojiReactions = [...new Set([...memory.preferences.emojiReactions, ...emojis])].slice(-5);
+      }
+      
       saveMemory(memory);
     }
 
@@ -187,8 +196,8 @@ Last interaction: ${memory.lastInteraction}
       messages: [
         {
           type: "text",
-          content: "Sorry, my circuits got a bit tangled! 🌙 Try again?",
-          textToRead: "Sorry, my circuits got a bit tangled!"
+          content: "brain glitched 👻✨",
+          textToRead: "oops my brain glitched"
         }
       ]
     });
@@ -198,5 +207,5 @@ Last interaction: ${memory.lastInteraction}
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`✨ 0816 Server running on http://localhost:${PORT}`);
+  console.log(`✨ 0816 Snapchat Companion running on http://localhost:${PORT}`);
 });
