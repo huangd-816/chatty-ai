@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+<<<<<<< HEAD
 }
 
 body {
@@ -16,17 +17,58 @@ body {
 }
 
 /* SNAPCHAT APP CONTAINER */
+=======
+}
+
+:root {
+  --blue: #0084FF;
+  --blue-dark: #0066CC;
+  --blue-light: #3399FF;
+  --blue-glow: rgba(0, 132, 255, 0.25);
+  --bg: #000;
+  --bg-app: #0a0a0f;
+  --bg-topbar: rgba(10, 10, 18, 0.95);
+  --bg-inputbar: rgba(10, 10, 18, 0.97);
+  --bg-msg-ai: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.07);
+  --text: #f0f0f0;
+  --text-muted: rgba(255, 255, 255, 0.4);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ─── APP SHELL ─────────────────────────────── */
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 .app {
   width: 100%;
   max-width: 430px;
   height: 100vh;
+<<<<<<< HEAD
   background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
+=======
+  height: 100dvh;
+  background: var(--bg-app);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
 }
 
+<<<<<<< HEAD
 /* TOP BAR - MINIMAL SNAPCHAT STYLE */
 .topbar {
   padding: 12px 16px;
@@ -37,11 +79,39 @@ body {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+=======
+/* subtle blue-tinted gradient background */
+.app::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 100, 255, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0, 60, 180, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── TOP BAR ────────────────────────────────── */
+.topbar {
+  position: relative;
+  z-index: 10;
+  padding: 12px 16px;
+  padding-top: calc(12px + env(safe-area-inset-top));
+  background: var(--bg-topbar);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
 
 .status {
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   gap: 10px;
 }
 
@@ -49,17 +119,37 @@ body {
   width: 44px;
   height: 44px;
   background: linear-gradient(135deg, #FFFC00 0%, #FF006E 100%);
+=======
+  gap: 12px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--blue) 0%, #0055cc 100%);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   font-weight: 700;
   font-size: 18px;
   box-shadow: 0 4px 20px rgba(255, 252, 0, 0.3);
+=======
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.35), 0 4px 16px var(--blue-glow);
+  flex-shrink: 0;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
 
-.name {
+.avatar-emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.status-info .name {
   font-weight: 600;
+<<<<<<< HEAD
   font-size: 14px;
   letter-spacing: 0.5px;
 }
@@ -74,16 +164,52 @@ body {
 .topbar-actions {
   display: flex;
   gap: 8px;
+=======
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  color: #fff;
 }
 
+.online {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 1px;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: #30d158;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(48, 209, 88, 0.7);
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ─── ICON BUTTONS ───────────────────────────── */
 .icon-btn {
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
+=======
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: rgba(255, 255, 255, 0.75);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   width: 38px;
   height: 38px;
   border-radius: 50%;
   cursor: pointer;
+<<<<<<< HEAD
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -109,19 +235,61 @@ body {
 @keyframes pulse-red {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.4); }
   50% { box-shadow: 0 0 0 10px rgba(255, 0, 110, 0); }
+=======
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s, transform 0.15s, box-shadow 0.18s;
+  flex-shrink: 0;
 }
 
-/* CHAT AREA */
+.icon-btn:hover {
+  background: rgba(0, 132, 255, 0.15);
+  border-color: rgba(0, 132, 255, 0.3);
+  color: var(--blue-light);
+  box-shadow: 0 0 12px var(--blue-glow);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
+}
+
+.icon-btn:active {
+  transform: scale(0.93);
+}
+
+.icon-btn.recording {
+  background: rgba(255, 45, 85, 0.2);
+  border-color: rgba(255, 45, 85, 0.5);
+  color: #ff2d55;
+  animation: pulse-rec 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse-rec {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 45, 85, 0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(255, 45, 85, 0); }
+}
+
+/* ─── CHAT AREA ─────────────────────────────── */
 .chat {
+  position: relative;
+  z-index: 1;
   flex: 1;
+<<<<<<< HEAD
   padding: 16px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
+=======
+  padding: 14px 14px 8px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   scroll-behavior: smooth;
+  overscroll-behavior: contain;
 }
 
+<<<<<<< HEAD
 .chat::-webkit-scrollbar {
   width: 4px;
 }
@@ -130,11 +298,16 @@ body {
   background: transparent;
 }
 
+=======
+.chat::-webkit-scrollbar { width: 3px; }
+.chat::-webkit-scrollbar-track { background: transparent; }
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 .chat::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.1);
   border-radius: 10px;
 }
 
+<<<<<<< HEAD
 .chat::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
@@ -196,11 +369,60 @@ body {
   background: transparent;
   padding: 0;
   border-radius: 12px;
+=======
+/* ─── MESSAGES ───────────────────────────────── */
+.msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 22px;
+  font-size: 15px;
+  line-height: 1.45;
+  animation: msgIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  word-break: break-word;
+}
+
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* User bubble — solid blue */
+.msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: #fff;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 2px 14px var(--blue-glow);
+}
+
+/* AI bubble — dark glass */
+.msg.ai {
+  align-self: flex-start;
+  background: var(--bg-msg-ai);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+
+/* Consecutive same-sender spacing */
+.msg + .msg.user  { margin-top: 2px; }
+.msg + .msg.ai    { margin-top: 2px; }
+.msg.user + .msg.ai,
+.msg.ai + .msg.user { margin-top: 10px; }
+
+/* ─── IMAGE MESSAGES ─────────────────────────── */
+.msg-image {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 16px;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   overflow: hidden;
 }
 
 .msg-image img {
   width: 100%;
+<<<<<<< HEAD
   max-width: 280px;
   border-radius: 12px;
   display: block;
@@ -208,10 +430,20 @@ body {
 }
 
 /* VOICE MESSAGE */
+=======
+  max-width: 260px;
+  border-radius: 16px;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── VOICE MESSAGES ─────────────────────────── */
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 .msg-voice {
   display: flex;
   align-items: center;
   gap: 10px;
+<<<<<<< HEAD
   min-width: 200px;
   padding: 8px 12px;
   background: rgba(255, 0, 110, 0.15);
@@ -228,10 +460,41 @@ body {
   width: 32px;
   height: 32px;
   background: linear-gradient(135deg, #FFFC00 0%, #FFD60A 100%);
+=======
+  min-width: 190px;
+  padding: 10px 14px;
+  border-radius: 22px;
+  border-bottom-left-radius: 5px;
+}
+
+.msg.user .msg-voice {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  border: none;
+}
+
+.msg.ai .msg-voice {
+  background: var(--bg-msg-ai);
+  border: 1px solid var(--border);
+}
+
+/* override padding since voice has its own */
+.msg.ai, .msg.user {
+  padding: 0;
+}
+.msg-text {
+  padding: 10px 14px;
+}
+
+.voice-play {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.2);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   font-size: 12px;
   cursor: pointer;
   flex-shrink: 0;
@@ -247,17 +510,45 @@ body {
 
 .voice-play:active {
   transform: scale(0.95);
+=======
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s, background 0.15s;
+  border: none;
+  color: #fff;
+}
+
+.msg.ai .voice-play {
+  background: var(--blue);
+  box-shadow: 0 2px 10px var(--blue-glow);
+}
+
+.voice-play:hover { transform: scale(1.1); }
+.voice-play:active { transform: scale(0.93); }
+
+.voice-play svg {
+  width: 14px;
+  height: 14px;
+  fill: #fff;
+  margin-left: 2px; /* optical center for play triangle */
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
 
 .voice-waves {
   display: flex;
   gap: 3px;
   align-items: center;
+<<<<<<< HEAD
   height: 24px;
+=======
+  height: 22px;
+  flex: 1;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
 
 .wave-bar {
   width: 3px;
+<<<<<<< HEAD
   height: 8px;
   background: rgba(255, 0, 110, 0.3);
   border-radius: 2px;
@@ -275,10 +566,25 @@ body {
 
 .msg.ai .wave-bar.active {
   background: rgba(255, 255, 255, 0.8);
+=======
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  transition: height 0.1s ease, background 0.1s ease;
 }
+
+.wave-bar.active {
+  height: 18px;
+  background: rgba(255, 255, 255, 0.9);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
+}
+
+.msg.ai .wave-bar { background: rgba(0, 132, 255, 0.35); }
+.msg.ai .wave-bar.active { background: var(--blue); height: 18px; }
 
 .voice-duration {
   font-size: 12px;
+<<<<<<< HEAD
   color: #9ca3af;
   flex-shrink: 0;
   min-width: 32px;
@@ -289,8 +595,23 @@ body {
 }
 
 /* INPUT BAR - SNAPCHAT BOTTOM SHEET */
+=======
+  color: rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.msg.ai .voice-duration { color: var(--text-muted); }
+
+.voice-text { display: none; }
+
+/* ─── INPUT BAR ──────────────────────────────── */
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 .inputbar {
+  position: relative;
+  z-index: 10;
   display: flex;
+<<<<<<< HEAD
   padding: 12px 16px 20px;
   gap: 8px;
   align-items: center;
@@ -319,6 +640,53 @@ input[type="text"]:focus {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 252, 0, 0.4);
   box-shadow: 0 0 0 3px rgba(255, 252, 0, 0.08);
+=======
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  background: var(--bg-inputbar);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.input-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+}
+
+.input-icon:hover {
+  background: rgba(0, 132, 255, 0.12);
+  color: var(--blue-light);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+#input {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  min-width: 0;
+}
+
+#input::placeholder { color: var(--text-muted); }
+
+#input:focus {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(0, 132, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.1);
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
 
 .send-btn {
@@ -326,13 +694,19 @@ input[type="text"]:focus {
   height: 38px;
   border-radius: 50%;
   border: none;
+<<<<<<< HEAD
   background: linear-gradient(135deg, #FFFC00 0%, #FFD60A 100%);
   color: #000;
   font-size: 16px;
+=======
+  background: var(--blue);
+  color: #fff;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   transition: all 0.2s;
   box-shadow: 0 2px 12px rgba(255, 252, 0, 0.2);
   font-weight: 600;
@@ -341,12 +715,20 @@ input[type="text"]:focus {
 .send-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 16px rgba(255, 252, 0, 0.3);
+=======
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 2px 12px var(--blue-glow);
+  flex-shrink: 0;
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
 
-.send-btn:active {
-  transform: scale(0.9);
+.send-btn:hover {
+  background: var(--blue-light);
+  transform: scale(1.06);
+  box-shadow: 0 4px 18px rgba(0, 132, 255, 0.4);
 }
 
+<<<<<<< HEAD
 /* Responsive */
 @media (max-width: 480px) {
   .app {
@@ -361,4 +743,13 @@ input[type="text"]:focus {
   .msg-image img {
     max-width: 240px;
   }
+=======
+.send-btn:active { transform: scale(0.92); }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 480px) {
+  .app { max-width: 100%; }
+  .msg { max-width: 88%; }
+  .msg-image img { max-width: 220px; }
+>>>>>>> 9ad19a8 (feat: blue UI redesign, SVG icons, fix voice bar & SpeechRecognition crash)
 }
