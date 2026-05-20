@@ -16,11 +16,43 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Serve frontend from public/
-app.use(express.static(join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'public', 'index.html'));
+  res.sendFile(join(__dirname, 'index.html'));
 });
+
+
+// --- GIPHY INTEGRATION ---
+async function fetchGif(query) {
+  try {
+    const key = process.env.GIPHY_API_KEY;
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${encodeURIComponent(query)}&limit=10&rating=pg-13`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.data && data.data.length > 0) {
+      const pick = data.data[Math.floor(Math.random() * Math.min(5, data.data.length))];
+      return pick.images.original.url;
+    }
+  } catch (e) { console.error("Giphy error:", e); }
+  return null;
+}
+
+
+// --- GIPHY INTEGRATION ---
+async function fetchGif(query) {
+  try {
+    const key = process.env.GIPHY_API_KEY;
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${encodeURIComponent(query)}&limit=10&rating=pg-13`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.data && data.data.length > 0) {
+      const pick = data.data[Math.floor(Math.random() * Math.min(5, data.data.length))];
+      return pick.images.original.url;
+    }
+  } catch (e) { console.error("Giphy error:", e); }
+  return null;
+}
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -126,19 +158,36 @@ You are "0816", a HIGHLY INTELLIGENT Snapchat-style AI companion. You are:
 - Notice patterns and bring them up naturally
 - NEVER give generic responses - be specific and personal
 
-You MUST respond ONLY in valid JSON format:
+You MUST respond ONLY in valid JSON format with MULTIPLE messages mixed together like a real Snapchat conversation:
 
 {
   "messages": [
     {
       "type": "text",
-      "content": "string with emojis, keep it SHORT and snappy",
-      "textToRead": "optional string for voice"
+      "content": "first short reaction with emojis",
+      "textToRead": "text for voice readout"
+    },
+    {
+      "type": "voice",
+      "content": "0:03",
+      "textToRead": "something warm and personal said out loud"
+    },
+    {
+      "type": "text",
+      "content": "follow-up question or thought 💭",
+      "textToRead": "follow up question"
     }
   ]
 }
 
-Remember: Less is more. Quality over quantity. Be authentic and warm.
+Rules:
+- Always send 2-4 messages per response, mixed types
+- Use "voice" type for emotional or personal moments
+- Keep each "text" message SHORT and punchy (1-2 lines max)
+- voice content is duration like "0:02" or "0:03"
+- For memes/GIFs use type "gif" with a "query" field like {"type":"gif","query":"laughing cat"}
+- textToRead is what gets spoken aloud for voice messages
+- Be authentic, warm, never generic
 `;
 
 app.post('/chat', async (req, res) => {
@@ -201,6 +250,36 @@ Your task: Respond with GENUINE emotion, understanding, and care. Show you're re
     } catch (err) {
       console.error("JSON parse failed:", err);
       parsedData = { messages: [{ type: "text", content: "oops! brain hiccup 👻✨", textToRead: "oops" }] };
+    }
+
+
+    // Process any gif messages — fetch real GIF URLs from Giphy
+    for (const msg of parsedData.messages || []) {
+      if (msg.type === 'gif' && msg.query) {
+        const gifUrl = await fetchGif(msg.query);
+        if (gifUrl) {
+          msg.type = 'image';
+          msg.content = gifUrl;
+        } else {
+          msg.type = 'text';
+          msg.content = 'couldn\'t find that gif 😅';
+        }
+      }
+    }
+
+
+    // Process any gif messages — fetch real GIF URLs from Giphy
+    for (const msg of parsedData.messages || []) {
+      if (msg.type === 'gif' && msg.query) {
+        const gifUrl = await fetchGif(msg.query);
+        if (gifUrl) {
+          msg.type = 'image';
+          msg.content = gifUrl;
+        } else {
+          msg.type = 'text';
+          msg.content = 'couldn\'t find that gif 😅';
+        }
+      }
     }
 
     if (parsedData.messages?.length > 0) {
