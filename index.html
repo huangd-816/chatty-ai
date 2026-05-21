@@ -26,6 +26,11 @@
     </div>
   </div>
   <div id="chat" class="chat"></div>
+  <div class="reply-bar" id="replyBar">
+    <span style="font-size:14px">↩️</span>
+    <span class="reply-bar-text" id="replyBarText"></span>
+    <button class="reply-bar-cancel" onclick="cancelReply()">✕</button>
+  </div>
   <div class="inputbar">
     <input type="file" id="fileInput" accept="image/*" hidden>
     <button class="icon-btn input-icon" onclick="document.getElementById('fileInput').click()" title="Photo">

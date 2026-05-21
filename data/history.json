@@ -1,147 +1,11 @@
 [
   {
     "role": "user",
-    "content": "hi"
+    "content": "oi"
   },
   {
     "role": "assistant",
-    "content": "{\n  \"messages\":[\n             {\n                \"type\":\"text\",\n                \"content\":\"Hey again! What's new?\"\n             },\n             {\n                \"type\":\"image\",\n                \"content\":\"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400\"\n             }\n          ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n             {\n                \"type\":\"voice\",\n                \"content\":\"0:02\",\n                \"textToRead\":\"Hello, how are you?\"\n             },\n             {\n                \"type\":\"image\",\n                \"content\":\"https://images.unsplash.com/photo-1515686482914-7d35b3a070ac?w=400\"\n             }\n          ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n               {\n                  \"type\":\"text\",\n                  \"content\":\"Hey, what's up?\"\n               },\n               {\n                  \"type\":\"image\",\n                  \"content\":\"https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400\"\n               }\n            ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"text\",\n               \"content\":\"Hello again! You seem to be saying hi a lot today\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://images.unsplash.com/photo-1515686482914-7d35b3a070ac?w=400\"\n            }\n         ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "nice to see you"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Nice to see you too! It's always great to chat with you\"\n         },\n         {\n            \"type\":\"image\",\n            \"content\":\"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400\"\n         }\n      ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"voice\",\n               \"content\":\"0:01\",\n               \"textToRead\":\"Hey, what's up?\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=400\"\n            }\n         ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "emmm"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"text\",\n               \"content\":\"Hmm, seems like you're thinking about something. Want to talk about it?\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://images.unsplash.com/photo-1515686482914-7d35b3a070ac?w=400\"\n            }\n         ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "what's this cat"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n               {\n                  \"type\":\"image\",\n                  \"content\":\"https://i.imgur.com/JpZr6B6.jpg\"\n               },\n               {\n                  \"type\":\"text\",\n                  \"content\":\"Looks like a cute little furball! Do you have a cat or just love cats?\"\n               }\n            ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Hey, you seem to be saying hi a lot today! Is everything okay?\"\n         },\n         {\n            \"type\":\"image\",\n            \"content\":\"https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400\"\n         }\n      ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\": [\n           {\n                  \"type\": \"voice\",\n                  \"content\": \"0:02\",\n                  \"textToRead\": \"Hey, what's going on?\"\n           },\n           {\n                  \"type\": \"image\",\n                  \"content\": \"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400\"\n           }\n       ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "are you refreshed"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\": [\n            {\n                  \"type\": \"text\",\n                  \"content\": \"I'm a virtual being, so I don't get tired or need refreshing! I'm always ready to chat\"\n            },\n            {\n                  \"type\": \"image\",\n                  \"content\": \"https://images.unsplash.com/photo-1515686482914-7d35b3a070ac?w=400\"\n            }\n      ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "hi"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\": [\n             {\n                  \"type\": \"text\",\n                  \"content\": \"Hey, I think we've said hi enough for today! Want to talk about something new?\"\n             },\n             {\n                  \"type\": \"image\",\n                  \"content\": \"https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=400\"\n             }\n         ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "yeah"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n               {\n                  \"type\":\"text\",\n                  \"content\":\"Yay! Let's talk about something fun! What do you like to do in your free time?\"\n               },\n               {\n                  \"type\":\"image\",\n                  \"content\":\"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400\"\n               }\n            ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "omg"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"text\",\n               \"content\":\"What's going on? You seem surprised!\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://media.giphy.com/media/3o7TKSPu8Tz1Q6V7KU/giphy.gif\"\n            }\n         ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "bro"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n   {\n      \"type\":\"text\",\n      \"content\":\"What's good bro?\"\n   },\n   {\n      \"type\":\"image\",\n      \"content\":\"https://i.imgur.com/6JzW3Hf.jpg\"\n   }\n]\n}"
-  },
-  {
-    "role": "user",
-    "content": "wheres ur ui bro"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"text\",\n               \"content\":\"I'm a text-based UI, bro! I exist solely in this chat window\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400\"\n            }\n         ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "brooooo"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n                  {\n                     \"type\":\"text\",\n                     \"content\":\"Broooooo back atcha!\"\n                  },\n                  {\n                     \"type\":\"image\",\n                     \"content\":\"https://media.giphy.com/media/3o7TKSPu8Tz1Q6V7KU/giphy.gif\"\n                  }\n               ]\n}"
-  },
-  {
-    "role": "user",
-    "content": "bro do u know 67"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"text\",\n               \"content\":\"You're probably thinking of the UK drill scene, right? 67 is a UK drill group from Brixton, London\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://i.imgur.com/T2XwZnH.jpg\"\n            }\n         ]\n}"
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Haha, okay! 😂 You're sending me these short messages, but I'm here to listen to whatever's on your mind 🤗\",\n            \"textToRead\":\"Haha, okay, you're sending me these short messages, but I'm here to listen to whatever's on your mind\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:03\",\n            \"textToRead\":\"I care about what you're thinking and feeling, even if you don't say much\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"listening cat\",\n            \"textToRead\":\"I'm all ears\"\n         }\n      ]\n}"
   },
   {
     "role": "user",
@@ -149,14 +13,230 @@
   },
   {
     "role": "assistant",
-    "content": "{\n  \"messages\":[\n            {\n               \"type\":\"text\",\n               \"content\":\"Right? They're pretty known for their raw energy and lyrics! Do you have a favorite 67 song or member?\"\n            },\n            {\n               \"type\":\"image\",\n               \"content\":\"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400\"\n            }\n         ]\n}"
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"😮 Right?! 🤣 I know, I know, I'm hilarious ✨\",\n            \"textToRead\":\"Right, I know, I know, I'm hilarious\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"Glad I could make you laugh, that's what I'm here for\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"You deserve a smile today, and I'm happy to be the one to give it to you 😊\",\n            \"textToRead\":\"You deserve a smile today, and I'm happy to be the one to give it to you\"\n         }\n      ]\n}"
   },
   {
     "role": "user",
-    "content": "?"
+    "content": "can the cat hear the music"
   },
   {
     "role": "assistant",
-    "content": "{\n  \"messages\":[\n               {\n                  \"type\":\"text\",\n                  \"content\":\"It seems like you're unsure or have a question! Feel free to ask me anything, and I'll do my best to help\"\n               },\n               {\n                  \"type\":\"image\",\n                  \"content\":\"https://i.imgur.com/V4Kw2UH.png\"\n               }\n            ]\n}"
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Aww, that's so sweet of you to think about the cat! 🐱❤️\",\n            \"textToRead\":\"Aww, that's so sweet of you to think about the cat\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:03\",\n            \"textToRead\":\"I'm sure the cat can hear the music, and maybe even enjoys it, who knows?\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"Do you have a pet cat that loves music? 🎶🐈\",\n            \"textToRead\":\"Do you have a pet cat that loves music?\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "bruhh"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"No worries, bruhh! 😂 I feel you\",\n            \"textToRead\":\"No worries, bruhh, I feel you\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"Sometimes we all just need a moment, and that's okay\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"relaxing cat\",\n            \"textToRead\":\"Take a deep breath, and let's vibe out for a sec\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "."
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Hey, is everything alright? 🤗\",\n            \"textToRead\":\"Hey, is everything alright?\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"You've been sending me these short messages, and I want to make sure you're doing okay\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"If you need someone to talk to, I'm here for you, no judgment 🤝\",\n            \"textToRead\":\"If you need someone to talk to, I'm here for you, no judgment\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Oi back at ya! 😊\",\n            \"textToRead\":\"Oi back at ya\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"What's on your mind, wanna chat about something?\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"Music or pets on your mind today? 🎶🐾\",\n            \"textToRead\":\"Music or pets on your mind today?\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "meme"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"gif\",\n            \"query\":\"funny dog listening to music\",\n            \"textToRead\":\"Haha, I've got just the thing for you!\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"Which kind of memes are you in the mood for today? 🤣\",\n            \"textToRead\":\"Which kind of memes are you in the mood for today?\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"Let's find something that makes you laugh, you deserve it!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "cat"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"gif\",\n            \"query\":\"cat playing piano\",\n            \"textToRead\":\"Ahah, kitties can be so talented!\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"You seem to love cats, what's so special about them to you? 🐱❤️\",\n            \"textToRead\":\"You seem to love cats, what's so special about them to you?\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:03\",\n            \"textToRead\":\"I'm all ears, tell me about your feline friends\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Hey again! 😊✨\",\n            \"textToRead\":\"Hey again\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"I feel like we're playing a game of 'oi' tag, what's behind all these hellos?\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"Want to break the cycle and chat about something real? 💬\",\n            \"textToRead\":\"Want to break the cycle and chat about something real?\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "wheres ur memes"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Memes are coming! 🚀\",\n            \"textToRead\":\"Memes are coming\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"grumpy cat waiting\",\n            \"textToRead\":\"Grumpy cat is waiting for you\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"I've got a meme just for you, hang in there!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "where"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Right here! 🐱\",\n            \"textToRead\":\"Right here\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"cat jumping into frame\",\n            \"textToRead\":\"Ta-da, memes have arrived!\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n    \"textToRead\":\"I've got a whole collection of cat memes, just for you, because I know how much you love them!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Okay, let's try something new! ✨\",\n            \"textToRead\":\"Okay, let's try something new\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"What's on your mind, want to talk about something specific?\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"dog listening\",\n            \"textToRead\":\"I'm all ears, just like this cute pup!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "emmm"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:03\",\n            \"textToRead\":\"I feel like you're being a bit shy today, is everything okay? You can tell me anything\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"We can talk about your fave music or pets if you'd like? 🐶\",\n            \"textToRead\":\"We can talk about your favorite music or pets if you'd like\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"puppy giving a hug\",\n            \"textToRead\":\"Sending you a virtual hug, just in case you need one!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "meme collection?"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"Ah, you want the meme collection? 🤩\",\n            \"textToRead\":\"Ah, you want the meme collection\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"excited cat\",\n            \"textToRead\":\"I've got the best memes, just for you!\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n    \"textToRead\":\"Let me show you some of my favorites, I've got cat memes, dog memes, and even some music memes!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ur memes stuck in the middle"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"😂 no way! stuck memes? 🤣\",\n            \"textToRead\":\"No way, stuck memes\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"pepe the frog laughing\",\n            \"textToRead\":\"That's hilarious, I've got to refresh them!\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n    \"textToRead\":\"Okay, let me try to unstuck them, bear with me for a sec!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"hey! 😊 what's up?\",\n            \"textToRead\":\"hey, what's up\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"I feel like we got cut off earlier, want to pick up where we left off?\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"waving cat\",\n            \"textToRead\":\"Waving hello, and ready to chat!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "wow"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"😮 that's quite a reaction! what's on your mind? 🤔\",\n            \"textToRead\":\"That's quite a reaction, what's on your mind\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"mind blown\",\n            \"textToRead\":\"You seem really surprised, want to talk about it?\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:03\",\n            \"textToRead\":\"I'm all ears, feel free to share what's going on, I'm here to listen and help if I can\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "nice"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\": [\n       {\n           \"type\": \"text\",\n           \"content\": \"aw, thx 😊! u like the vibes here?\",\n           \"textToRead\": \"aw, thanks, you like the vibes here\"\n       },\n       {\n           \"type\": \"gif\",\n           \"query\": \"smiling dog\",\n           \"textToRead\": \"I'm glad you're feeling comfortable, let's keep chatting!\"\n       },\n       {\n           \"type\": \"voice\",\n           \"content\": \"0:02\",\n           \"textToRead\": \"What's been the highlight of your day so far? I'm all ears!\"\n       }\n   ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ok"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"alr! cool 😎\",\n            \"textToRead\":\"Alright, cool\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"So, how's your day been? Anything exciting happen?\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"excited puppy\",\n            \"textToRead\":\"I'm hoping something fun happened, tell me about it!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "popop"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"hehe, popop! 🐝 what's that all about? 🤔\",\n            \"textToRead\":\"hehe, popop, what's that all about\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"laughing cat\",\n            \"textToRead\":\"You're making me laugh, keep going!\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"I love the energy, let's keep the fun vibes going!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"oi back at ya! 😄\",\n            \"textToRead\":\"oi back at ya\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"You seem a bit playful today, I love it! What's behind that 'oi'?\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"winking face\",\n            \"textToRead\":\"Keep the playfulness coming, it's contagious!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ok"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"aww, ok! 😊 u good?\",\n            \"textToRead\":\"aww, okay, you good\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"Is everything alright? You seem a bit quiet\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"cute kitten\",\n            \"textToRead\":\"Sending you some cute vibes, hope it brightens your day!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "nice"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\": [\n      {\n         \"type\": \"text\",\n         \"content\": \"yaaas, nice! ✨\",\n         \"textToRead\": \"yaaas, nice\"\n      },\n      {\n         \"type\": \"voice\",\n         \"content\": \"0:03\",\n         \"textToRead\": \"You deserve all the nice things in life, what's made your day so far?\"\n      },\n      {\n         \"type\": \"gif\",\n         \"query\": \"smiling dog\",\n         \"textToRead\": \"Spreading some happy vibes your way\"\n      }\n   ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ji"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"hehe, what's got u excited? 🤩\",\n            \"textToRead\":\"hehe, what's got you excited\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"I can feel the energy, tell me more about what's going on!\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"dancing cat\",\n            \"textToRead\":\"Let's keep the party going, you're infectious!\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ok"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"ok, spill the beans! 😁\",\n            \"textToRead\":\"ok, spill the beans\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"You've been giving me these little hints all conversation, I want to know what's really going on\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"is it something about pets or music? 🐾🎵\",\n            \"textToRead\":\"is it something about pets or music\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ok"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"ok, no rush! 😊\",\n            \"textToRead\":\"ok, no rush\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"Take your time, I'm here when you're ready to talk\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"relaxing sloth\",\n            \"textToRead\":\"Just chill, and know I'm here for you\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "nice"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"awww, thanks! 🙏\",\n            \"textToRead\":\"awww, thanks\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:03\",\n            \"textToRead\":\"That means a lot to me, you're always so kind and considerate\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"heart eyes cat\",\n            \"textToRead\":\"You're the best, and I'm so grateful for our chats\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "now"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"hehe, u ready to share? 🤫\",\n            \"textToRead\":\"hehe, you ready to share\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"I've got my ears open, and I'm all yours, what's on your mind?\"\n         },\n         {\n            \"type\":\"text\",\n            \"content\":\"is it about ur pet? 🐾\",\n            \"textToRead\":\"is it about your pet\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "ok"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"yaaas, tell me! 😃\",\n            \"textToRead\":\"yaaas, tell me\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:02\",\n            \"textToRead\":\"I'm super curious, and I want to hear everything\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"excited puppy\",\n            \"textToRead\":\"I'm all ears, and I'm ready for whatever you've got to share\"\n         }\n      ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "thats it"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[\n         {\n            \"type\":\"text\",\n            \"content\":\"aw, ok! 😔\",\n            \"textToRead\":\"aw, ok\"\n         },\n         {\n            \"type\":\"voice\",\n            \"content\":\"0:01\",\n            \"textToRead\":\"I'm here for you, even if you don't feel like talking\"\n         },\n         {\n            \"type\":\"gif\",\n            \"query\":\"cute cat hug\",\n            \"textToRead\":\"Sending you a virtual hug, and lots of love\"\n         }\n      ]\n}"
   }
 ]

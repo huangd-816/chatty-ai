@@ -1,15 +1,39 @@
 {
   "userName": null,
-  "affection": 0,
-  "chatCount": 6,
-  "facts": [],
-  "emotions": [],
-  "lastMessages": [
-    "hi",
-    "i'm alex",
-    "do you know me",
-    "who are you",
-    "hi",
-    "wow yeah sure"
-  ]
+  "affection": 100,
+  "chatCount": 39,
+  "lastInteraction": "2026-05-21T01:55:21.573Z",
+  "mood": "neutral",
+  "topics": [
+    "pets",
+    "music"
+  ],
+  "keywords": [
+    "memes",
+    "where",
+    "emmm",
+    "collection?",
+    "stuck",
+    "in",
+    "oi",
+    "wow",
+    "nice",
+    "ok",
+    "popop",
+    "ji",
+    "now",
+    "thats",
+    "it"
+  ],
+  "sentiment": "positive",
+  "preferences": {
+    "emojiReactions": [
+      "✨",
+      "\ud83d",
+      "\ud83c",
+      "\ude02"
+    ],
+    "favoriteTopics": []
+  },
+  "insights": []
 }

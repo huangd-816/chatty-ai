@@ -1,5 +1,23 @@
 console.log("0816 v3.0 - Blue UI + Voice Fix");
 
+
+// ─── REPLY STATE ──────────────────────────────
+let replyingTo = null;
+
+function setReply(text, sender) {
+  replyingTo = { text, sender };
+  const bar = document.getElementById('replyBar');
+  const barText = document.getElementById('replyBarText');
+  bar.classList.add('active');
+  barText.textContent = (sender === 'user' ? 'You' : '0816') + ': ' + text.slice(0, 60);
+  document.getElementById('input').focus();
+}
+
+function cancelReply() {
+  replyingTo = null;
+  document.getElementById('replyBar').classList.remove('active');
+}
+
 // ─── AUDIO ────────────────────────────────────────────
 let audioContext = null;
 
@@ -56,7 +74,7 @@ function renderMessage(item, sender) {
   } else if (item.type === "image" || item.type === "image-upload") {
     div.className += " msg-image";
     const url = item.content || "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400";
-    div.innerHTML = `<img src="${url}" onerror="this.src='https://via.placeholder.com/200x200?text=📷'" loading="lazy" />`;
+    div.innerHTML = `<img src="${url}" onerror="this.src='https://via.placeholder.com/200x200?text=📷'" loading="lazy" style="width:240px;height:180px;object-fit:cover;border-radius:16px;display:block;" />`;
 
   } else if (item.type === "voice") {
     div.className += " msg-voice";
@@ -80,7 +98,32 @@ function renderMessage(item, sender) {
     `;
   }
 
-  chat.appendChild(div);
+  // Wrap in row with reply action button
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + sender;
+
+  const actions = document.createElement('div');
+  actions.className = 'msg-actions';
+
+  const replyBtn = document.createElement('button');
+  replyBtn.className = 'msg-action-btn';
+  replyBtn.title = 'Reply';
+  replyBtn.innerHTML = '↩';
+  const msgText = item.content || '';
+  replyBtn.onclick = () => setReply(typeof msgText === 'string' ? msgText : 'message', sender);
+  actions.appendChild(replyBtn);
+
+  // Add reply quote inside bubble if replying
+  if (item.replyTo) {
+    const quote = document.createElement('div');
+    quote.className = 'reply-quote';
+    quote.textContent = (item.replyTo.sender === 'user' ? 'You' : '0816') + ': ' + item.replyTo.text.slice(0, 60);
+    div.insertBefore(quote, div.firstChild);
+  }
+
+  row.appendChild(div);
+  row.appendChild(actions);
+  chat.appendChild(row);
   scrollToBottom();
 }
 
@@ -125,7 +168,12 @@ async function sendMessage() {
   const msg = input.value.trim();
   if (!msg) return;
 
-  renderMessage({ type: "text", content: msg }, "user");
+  const msgItem = { type: "text", content: msg };
+  if (replyingTo) {
+    msgItem.replyTo = replyingTo;
+    cancelReply();
+  }
+  renderMessage(msgItem, "user");
   input.value = "";
   sendToAI(msg);
 }

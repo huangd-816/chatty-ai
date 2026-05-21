@@ -40,19 +40,7 @@ async function fetchGif(query) {
 
 
 // --- GIPHY INTEGRATION ---
-async function fetchGif(query) {
-  try {
-    const key = process.env.GIPHY_API_KEY;
-    const url = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${encodeURIComponent(query)}&limit=10&rating=pg-13`;
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.data && data.data.length > 0) {
-      const pick = data.data[Math.floor(Math.random() * Math.min(5, data.data.length))];
-      return pick.images.original.url;
-    }
-  } catch (e) { console.error("Giphy error:", e); }
-  return null;
-}
+
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -185,7 +173,7 @@ Rules:
 - Use "voice" type for emotional or personal moments
 - Keep each "text" message SHORT and punchy (1-2 lines max)
 - voice content is duration like "0:02" or "0:03"
-- For memes/GIFs use type "gif" with a "query" field like {"type":"gif","query":"laughing cat"}
+- REGULARLY send GIFs (every 2-3 responses) using type "gif" with "query" like {"type":"gif","query":"laughing cat"}. Use GIFs for: reactions, funny moments, emotions, memes, anything visual. Be creative with queries.
 - textToRead is what gets spoken aloud for voice messages
 - Be authentic, warm, never generic
 `;
