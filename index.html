@@ -107,6 +107,11 @@
 <!-- ══ VIDEO CALL SCREEN ═════════════════════ -->
 <div class="fullscreen" id="videoScreen">
   <div class="video-bg">
+    <!-- Portrait mode: real-face photo (shown when a face preset is selected) -->
+    <div class="call-portrait" id="callPortrait" style="display:none">
+      <img id="callPortraitImg" src="" alt="" />
+    </div>
+    <!-- Generated mode: canvas drawing (default fallback) -->
     <canvas id="callFaceCanvas" width="280" height="280"></canvas>
     <div class="video-name" id="callName">0816</div>
     <div class="video-status" id="videoStatus">Connecting...</div>
@@ -252,6 +257,8 @@
         <button class="voice-btn" data-voice="bold" onclick="selectVoice(this)">🔥 Bold</button>
         <button class="voice-btn" data-voice="deep" onclick="selectVoice(this)">🌊 Deep</button>
       </div>
+      <div class="modal-label" style="margin-top:16px">Face</div>
+      <div class="face-preset-grid" id="facePresetGrid"></div>
       <button class="modal-create-btn" onclick="createCompanion()">✨ Create</button>
       <button class="modal-back-btn" onclick="goStep(2)">← Back</button>
     </div>

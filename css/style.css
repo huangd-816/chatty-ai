@@ -279,6 +279,66 @@ body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif
 .pip-time { font-size: 11px; color: #30d158; }
 .pip-end { background: rgba(255,59,48,0.2); border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ff3b30; flex-shrink: 0; }
 
+/* ─── CALL PORTRAIT (real face mode) ────────── */
+.call-portrait {
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 0 60px rgba(0,132,255,0.3);
+  animation: videoPulse 2.5s ease-in-out infinite;
+  transition: box-shadow 0.3s;
+}
+.call-portrait.speaking {
+  box-shadow: 0 0 80px rgba(0,132,255,0.65), 0 0 120px rgba(0,132,255,0.2);
+  animation: portraitSpeakPulse 0.5s ease-in-out infinite alternate;
+}
+@keyframes portraitSpeakPulse {
+  from { box-shadow: 0 0 55px rgba(0,132,255,0.5); }
+  to   { box-shadow: 0 0 90px rgba(0,132,255,0.8), 0 0 140px rgba(0,132,255,0.3); }
+}
+#callPortraitImg {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 15%;
+  display: block;
+  transition: transform 0.15s ease;
+}
+.call-portrait.speaking #callPortraitImg {
+  animation: portraitBreathe 0.55s ease-in-out infinite alternate;
+}
+@keyframes portraitBreathe {
+  from { transform: scale(1); }
+  to   { transform: scale(1.025) translateY(-4px); }
+}
+
+/* ─── FACE PRESET PICKER ─────────────────────── */
+.face-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.face-preset-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 2px solid transparent;
+  border-radius: 12px; padding: 6px 4px;
+  cursor: pointer; transition: all 0.15s;
+}
+.face-preset-btn:hover { background: rgba(255,255,255,0.08); }
+.face-preset-btn.selected { border-color: var(--blue); background: rgba(0,132,255,0.1); }
+.face-preset-thumb {
+  width: 54px; height: 54px;
+  border-radius: 50%; object-fit: cover; object-position: center 10%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,132,255,0.15); font-size: 22px;
+}
+.face-preset-name {
+  font-size: 10px; color: var(--text-muted);
+  text-align: center; line-height: 1.2;
+}
+.face-preset-btn.selected .face-preset-name { color: var(--blue-light); }
+
 /* ─── CALL SPEAK ─────────────────────────────── */
 .call-speak-indicator { display: flex; align-items: flex-end; gap: 3px; height: 26px; opacity: 0; transition: opacity 0.3s; }
 .call-speak-indicator.speaking { opacity: 1; }

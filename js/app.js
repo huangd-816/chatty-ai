@@ -32,6 +32,7 @@ let modalPersonalities = ['bff'];
 let modalLang = 'en';
 let modalGender = 'female';
 let modalVoiceStyle = 'auto';
+let modalFacePreset = 'auto';
 let editingId = null;
 
 function selectVoice(btn) {
@@ -40,9 +41,30 @@ function selectVoice(btn) {
   modalVoiceStyle = btn.dataset.voice;
 }
 
+function renderFacePresets() {
+  const grid = document.getElementById('facePresetGrid');
+  if (!grid) return;
+  const visible = FACE_PRESETS.filter(p => p.gender === 'any' || p.gender === modalGender);
+  grid.innerHTML = visible.map(p => `
+    <button class="face-preset-btn ${modalFacePreset === p.id ? 'selected' : ''}"
+            data-face="${p.id}" onclick="selectFacePreset(this)">
+      ${p.url
+        ? `<img class="face-preset-thumb" src="${p.url}" alt="${p.name}" loading="lazy">`
+        : `<div class="face-preset-thumb face-preset-auto">✨</div>`}
+      <span class="face-preset-name">${p.name}</span>
+    </button>`).join('');
+}
+
+function selectFacePreset(btn) {
+  modalFacePreset = btn.dataset.face;
+  document.querySelectorAll('.face-preset-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
 function openCreateModal() {
   editingId = null;
   modalVoiceStyle = 'auto';
+  modalFacePreset = 'auto';
   document.getElementById('modalTitle').textContent = 'New AI Companion';
   document.getElementById('companionNameInput').value = '';
   document.querySelectorAll('.avatar-opt').forEach(e => e.classList.remove('selected'));
@@ -88,6 +110,7 @@ function editCurrentCompanion() {
   document.querySelectorAll('.voice-btn').forEach(b => {
     b.classList.toggle('selected', b.dataset.voice === modalVoiceStyle);
   });
+  modalFacePreset = c.facePreset || 'auto';
   goStep(1);
   document.getElementById('createModal').classList.add('active');
   closeScreen('profile');
@@ -101,6 +124,7 @@ function goStep(n) {
   document.querySelectorAll('.modal-step').forEach((s, i) => {
     s.classList.toggle('active', i + 1 === n);
   });
+  if (n === 3) renderFacePresets();
 }
 
 function selectAvatar(el) {
@@ -142,6 +166,8 @@ function selectGender(btn) {
   document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   modalGender = btn.dataset.gender;
+  modalFacePreset = 'auto';
+  renderFacePresets();
 }
 
 function createCompanion() {
@@ -150,7 +176,7 @@ function createCompanion() {
     const c = getCompanion(editingId);
     c.name = name; c.avatar = modalAvatar; c.vibe = modalVibe;
     c.personalities = modalPersonalities; c.language = modalLang; c.gender = modalGender;
-    c.voiceStyle = modalVoiceStyle;
+    c.voiceStyle = modalVoiceStyle; c.facePreset = modalFacePreset;
     saveCompanions();
     renderSidebar();
     switchCompanion(editingId);
@@ -160,7 +186,8 @@ function createCompanion() {
     const id = 'ai_' + Date.now();
     companions.push({
       id, name, avatar: modalAvatar, personalities: modalPersonalities,
-      vibe: modalVibe, language: modalLang, gender: modalGender, voiceStyle: modalVoiceStyle,
+      vibe: modalVibe, language: modalLang, gender: modalGender,
+      voiceStyle: modalVoiceStyle, facePreset: modalFacePreset,
       created: Date.now(), lastMessage: '', lastTime: Date.now()
     });
     saveCompanions();
@@ -341,6 +368,25 @@ let mouthOpen = 0;
 
 // Face styles per personality
 // ─── REALISTIC HUMAN FACE ─────────────────────
+// ─── FACE PRESETS (photorealistic portraits) ──
+const FACE_PRESETS = [
+  { id:'auto', name:'Generated', gender:'any',    url:null },
+  { id:'f1',  name:'Mia',       gender:'female', url:'https://i.pravatar.cc/400?img=47' },
+  { id:'f2',  name:'Sofia',     gender:'female', url:'https://i.pravatar.cc/400?img=9'  },
+  { id:'f3',  name:'Nova',      gender:'female', url:'https://i.pravatar.cc/400?img=5'  },
+  { id:'f4',  name:'Jade',      gender:'female', url:'https://i.pravatar.cc/400?img=25' },
+  { id:'f5',  name:'Aria',      gender:'female', url:'https://i.pravatar.cc/400?img=56' },
+  { id:'f6',  name:'Luna',      gender:'female', url:'https://i.pravatar.cc/400?img=1'  },
+  { id:'m1',  name:'Kai',       gender:'male',   url:'https://i.pravatar.cc/400?img=68' },
+  { id:'m2',  name:'Leo',       gender:'male',   url:'https://i.pravatar.cc/400?img=53' },
+  { id:'m3',  name:'Max',       gender:'male',   url:'https://i.pravatar.cc/400?img=61' },
+  { id:'m4',  name:'Ash',       gender:'male',   url:'https://i.pravatar.cc/400?img=7'  },
+  { id:'m5',  name:'Rio',       gender:'male',   url:'https://i.pravatar.cc/400?img=3'  },
+  { id:'m6',  name:'Zion',      gender:'male',   url:'https://i.pravatar.cc/400?img=69' },
+  { id:'nb1', name:'Avery',     gender:'nonbinary', url:'https://i.pravatar.cc/400?img=15' },
+  { id:'nb2', name:'Sage',      gender:'nonbinary', url:'https://i.pravatar.cc/400?img=30' },
+];
+
 const FACE_STYLES = {
   default:    { skin:'#F5C5A3', skin2:'#E8A882', hair:'#3D2314', eye:'#4A7FC1', lip:'#D4687A', blush:'rgba(220,100,100,0.15)' },
   flirty:     { skin:'#F7C8A0', skin2:'#EAA878', hair:'#8B1A1A', eye:'#7B4EA0', lip:'#C84B6A', blush:'rgba(200,80,100,0.18)' },
@@ -720,7 +766,26 @@ function lightenColor(hex, amount) {
   return `rgb(${r},${g},${b})`;
 }
 
+function updateCallPortrait() {
+  const c = getCurrentCompanion();
+  const portrait = document.getElementById('callPortrait');
+  const canvas = document.getElementById('callFaceCanvas');
+  const preset = FACE_PRESETS.find(p => p.id === (c.facePreset || 'auto'));
+  if (preset?.url) {
+    const img = document.getElementById('callPortraitImg');
+    img.src = preset.url;
+    img.onerror = () => { portrait.style.display = 'none'; canvas.style.display = 'block'; startCallFaceAnimation(); };
+    portrait.style.display = 'flex';
+    canvas.style.display = 'none';
+  } else {
+    portrait.style.display = 'none';
+    canvas.style.display = 'block';
+  }
+}
+
 function startCallFaceAnimation() {
+  const canvas = document.getElementById('callFaceCanvas');
+  if (canvas.style.display === 'none') return;
   const loop = () => {
     drawCallFace(callSpeaking);
     callAnimFrame = requestAnimationFrame(loop);
@@ -770,6 +835,7 @@ async function speakCallPhrase() {
 
   callSpeaking = true;
   document.getElementById('callSpeakIndicator')?.classList.add('speaking');
+  document.getElementById('callPortrait')?.classList.add('speaking');
 
   const controller = new AbortController();
   const ttsTimeout = setTimeout(() => controller.abort(), 8000);
@@ -789,20 +855,19 @@ async function speakCallPhrase() {
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     const audio = new Audio(url);
-    audio.onended = () => {
+    const stopPortraitSpeak = () => {
       callSpeaking = false;
       document.getElementById('callSpeakIndicator')?.classList.remove('speaking');
-      URL.revokeObjectURL(url);
+      document.getElementById('callPortrait')?.classList.remove('speaking');
     };
-    audio.onerror = () => {
-      callSpeaking = false;
-      document.getElementById('callSpeakIndicator')?.classList.remove('speaking');
-    };
+    audio.onended = () => { stopPortraitSpeak(); URL.revokeObjectURL(url); };
+    audio.onerror = () => stopPortraitSpeak();
     audio.play();
   } catch (e) {
     clearTimeout(ttsTimeout);
     callSpeaking = false;
     document.getElementById('callSpeakIndicator')?.classList.remove('speaking');
+    document.getElementById('callPortrait')?.classList.remove('speaking');
     console.warn('Call voice error:', e);
   }
 }
@@ -814,6 +879,7 @@ async function startVideoCall() {
   document.getElementById('pipName').textContent = c.name;
   document.getElementById('pipAvatar').textContent = c.avatar;
   document.getElementById('videoStatus').textContent = 'Ringing... 📞';
+  updateCallPortrait();
   startCallFaceAnimation();
 
   // Non-blocking — never delays call startup
@@ -857,6 +923,7 @@ function stopVideoCall() {
   if (callTimerInterval) { clearInterval(callTimerInterval); callTimerInterval = null; }
   window.speechSynthesis.cancel();
   callSpeaking = false;
+  document.getElementById('callPortrait')?.classList.remove('speaking');
   stopCallFaceAnimation();
   document.querySelector('.video-self-inner').innerHTML = 'You';
   document.getElementById('videoStatus').textContent = 'Connecting...';
@@ -1729,3 +1796,5 @@ window.toggleSelectMode = toggleSelectMode;
 window.deleteSelected = deleteSelected;
 window.selectAll = selectAll;
 window.selectVoice = selectVoice;
+window.selectFacePreset = selectFacePreset;
+window.renderFacePresets = renderFacePresets;
