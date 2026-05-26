@@ -258,6 +258,7 @@
         <button class="voice-btn" data-voice="deep" onclick="selectVoice(this)">🌊 Deep</button>
       </div>
       <div class="modal-label" style="margin-top:16px">Face</div>
+      <input type="text" id="faceNameInput" class="face-name-input" placeholder="Type a name for a custom face..." oninput="onFaceNameInput(this.value)" autocomplete="off" maxlength="24">
       <div class="face-preset-grid" id="facePresetGrid"></div>
       <button class="modal-create-btn" onclick="createCompanion()">✨ Create</button>
       <button class="modal-back-btn" onclick="goStep(2)">← Back</button>
@@ -265,6 +266,6 @@
   </div>
 </div>
 
-<script src="js/app.js?v=6.2"></script>
+<script src="js/app.js?v=6.3"></script>
 </body>
 </html>

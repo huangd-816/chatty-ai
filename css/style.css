@@ -328,6 +328,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif
   to   { transform: scale(1.02) translateY(-3px); }
 }
 
+/* ─── FACE NAME INPUT ────────────────────────── */
+.face-name-input {
+  width: 100%; box-sizing: border-box;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 10px; padding: 9px 12px;
+  color: #fff; font-size: 14px; margin-bottom: 8px;
+  outline: none; transition: border-color 0.2s;
+}
+.face-name-input:focus { border-color: var(--blue); }
+.face-name-input::placeholder { color: var(--text-muted); }
+
 /* ─── FACE PRESET PICKER (character bar) ────── */
 .face-preset-grid {
   display: flex;
