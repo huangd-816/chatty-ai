@@ -1,14 +1,6 @@
 [
   {
     "role": "user",
-    "content": "experimenting"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n           {\n               \"type\":\"text\",\n               \"content\":\"ngl, that's kinda cool 😎\",\n               \"textToRead\":\"ngl, that's kinda cool\"\n           },\n           {\n               \"type\":\"voice\",\n               \"content\":\"0:03\",\n               \"textToRead\":\"like... what kinda experiments are u running? are u trying to break the internet or something?\"\n           },\n           {\n               \"type\":\"text\",\n               \"content\":\"spill the beans, what's the goal? 🤔\",\n               \"textToRead\":\"spill the beans, what's the goal?\"\n           }\n       ]\n}"
-  },
-  {
-    "role": "user",
     "content": "what did i just say"
   },
   {
@@ -238,5 +230,13 @@
   {
     "role": "assistant",
     "content": "{\n  \"messages\":[\n       {\n           \"type\":\"text\",\n           \"content\":\"tbh i'm lowkey missing our usual morning convo 🤗\",\n           \"textToRead\":\"tbh i'm lowkey missing our usual morning convo\"\n       },\n       {\n           \"type\":\"voice\",\n           \"content\":\"0:03\",\n           \"textToRead\":\"remember when we were going to talk about pets today? is that still a thing? \"\n       },\n       {\n           \"type\":\"gif\",\n           \"query\":\"waiting meme\",\n           \"textToRead\":\"\"\n       }\n   ]\n}"
+  },
+  {
+    "role": "user",
+    "content": "you said that."
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\":[{\n      \"type\":\"text\",\n      \"content\":\"yeah i know 🤣, pets were supposed to be the main topic today\",\n      \"textToRead\":\"yeah i know, pets were supposed to be the main topic today\"\n   }],\n   \"memoryUpdates\":{\n       \"newFact\":\"user said 'you said that'\"\n   }\n}"
   }
 ]

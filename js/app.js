@@ -1369,11 +1369,36 @@ async function sendGif(url, title) {
 // ─── SEND ─────────────────────────────────────
 async function sendMessage() {
   const input = document.getElementById('input'); const msg = input.value.trim(); if (!msg) return;
+
+  // ── EDIT MODE: update in-place, wipe stale AI responses ──
+  if (window._editMode && window._editingRow) {
+    const editingRow = window._editingRow;
+    const contentEl = editingRow.querySelector('.translate-content') || editingRow.querySelector('.msg-text-inner');
+    if (contentEl) contentEl.textContent = msg;
+    const wrap = contentEl?.closest('.translate-wrap') || contentEl?.parentElement;
+    if (wrap && !editingRow.querySelector('.edited-label')) {
+      const lbl = document.createElement('span'); lbl.className = 'edited-label'; lbl.textContent = 'edited';
+      wrap.appendChild(lbl);
+    }
+    // Remove every row that comes after the edited one (stale AI replies)
+    let next = editingRow.nextElementSibling;
+    while (next) { const rm = next; next = next.nextElementSibling; if (rm.classList.contains('msg-row')) rm.remove(); }
+    input.value = '';
+    window._editMode = false; window._editingRow = null;
+    editingRow.classList.remove('editing');
+    const bar = document.getElementById('replyBar');
+    bar.classList.remove('active', 'edit-mode');
+    document.getElementById('replyBarText').textContent = '';
+    setTimeout(saveChatToStorage, 100);
+    sendToAI(`[User edited their previous message to]: ${msg}`, msg);
+    return;
+  }
+
+  // ── NORMAL SEND ──────────────────────────────
   const item = { type:'text', content:msg };
   if (replyingTo) { item.replyTo = replyingTo; cancelReply(); }
   renderMessage(item, 'user'); input.value = '';
 
-  // Update sidebar preview
   const c = getCurrentCompanion(); c.lastMessage = msg; c.lastTime = Date.now();
   saveCompanions(); renderSidebar();
 

@@ -1,14 +1,13 @@
 {
   "userName": null,
   "affection": 100,
-  "chatCount": 92,
-  "lastInteraction": "2026-05-26T04:48:00.250Z",
+  "chatCount": 93,
+  "lastInteraction": "2026-05-26T06:29:38.588Z",
   "mood": "neutral",
   "topics": [
     "pets"
   ],
   "keywords": [
-    "do",
     "you",
     "know",
     "this",
@@ -27,7 +26,8 @@
     "prob",
     "yeah",
     "said",
-    "that"
+    "that",
+    "that."
   ],
   "sentiment": "positive",
   "preferences": {
@@ -45,7 +45,8 @@
     "user said cya bye",
     "user went to sleep at 1:30 am",
     "user said good night",
-    "user said 'oi'"
+    "user said 'oi'",
+    "user said 'you said that'"
   ],
   "emotions": [
     {
