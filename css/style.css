@@ -265,7 +265,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif
   z-index: 0;
 }
 .video-bg > * { position: relative; z-index: 1; }
-#callFaceCanvas { border-radius: 50%; box-shadow: 0 0 60px rgba(0,132,255,0.3); animation: videoPulse 2.5s ease-in-out infinite; }
+#callFaceCanvas { border-radius: 24px; box-shadow: 0 8px 48px rgba(0,0,0,0.7), 0 0 40px rgba(0,132,255,0.2); border: 1.5px solid rgba(255,255,255,0.1); animation: facetimePulse 3s ease-in-out infinite; }
 @keyframes videoPulse { 0%,100%{box-shadow:0 0 40px rgba(0,132,255,0.2)} 50%{box-shadow:0 0 80px rgba(0,132,255,0.5)} }
 .video-name { font-size: 24px; font-weight: 600; color: #fff; }
 .video-status { font-size: 13px; color: var(--text-muted); }
