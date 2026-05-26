@@ -1,26 +1,44 @@
 {
   "userName": null,
-  "affection": 16,
-  "chatCount": 2,
-  "lastInteraction": "2026-05-25T12:29:53.108Z",
+  "affection": 64,
+  "chatCount": 8,
+  "lastInteraction": "2026-05-26T03:35:16.644Z",
   "mood": "neutral",
   "topics": [],
   "keywords": [
     "hi",
     "speak",
-    "japanese!"
+    "japanese!",
+    "japanese",
+    "nope,",
+    "teach",
+    "me",
+    "some",
+    "ok",
+    "like",
+    "what's",
+    "how",
+    "to",
+    "pronounce",
+    "them",
+    "thiese",
+    "two"
   ],
   "sentiment": "positive",
   "preferences": {
     "emojiReactions": [
-      "\ud83d"
+      "\ud83d",
+      "\ud83c",
+      "\ude02"
     ],
     "favoriteTopics": []
   },
   "insights": [],
   "facts": [
     "user said hi",
-    "user wants to speak japanese"
+    "user wants to speak japanese",
+    "user wants to learn japanese",
+    "konnichiwa means hi"
   ],
   "emotions": [
     {
@@ -32,11 +50,38 @@
       "date": "2026-05-25",
       "emotion": "excited",
       "context": "AI observed"
+    },
+    {
+      "date": "2026-05-26",
+      "emotion": "neutral",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-26",
+      "emotion": "curious",
+      "context": "like what's hi"
+    },
+    {
+      "date": "2026-05-26",
+      "emotion": "curious",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-26",
+      "emotion": "curious",
+      "context": "how to pronounce them"
+    },
+    {
+      "date": "2026-05-26",
+      "emotion": "excited",
+      "context": "AI observed"
     }
   ],
   "importantMoments": [
     "user initiated conversation",
-    "language change request"
+    "language change request",
+    "language learning",
+    "japanese greeting learned"
   ],
   "personality": {
     "humorLevel": 5,

@@ -19,7 +19,7 @@
       </button>
     </div>
     <div class="sidebar-search-wrap">
-      <input class="sidebar-search" type="text" placeholder="Search" oninput="filterCompanions(this.value)" />
+      <input class="sidebar-search" id="sidebarSearch" name="sidebarSearch" type="text" placeholder="Search" oninput="filterCompanions(this.value)" autocomplete="off" />
     </div>
     <div class="companions-list" id="companionsList"></div>
   </div>
@@ -185,7 +185,7 @@
         <span class="avatar-opt" onclick="selectAvatar(this)">🌸</span>
         <span class="avatar-opt" onclick="selectAvatar(this)">🐟</span>
       </div>
-      <input class="modal-input" id="companionNameInput" type="text" placeholder="Name your AI..." maxlength="20" />
+      <input class="modal-input" id="companionNameInput" name="companionName" type="text" placeholder="Name your AI..." maxlength="20" autocomplete="off" />
       <div class="modal-label">Relationship Type</div>
       <div class="vibe-grid" id="vibeGrid">
         <button class="vibe-btn selected" data-vibe="bestie" onclick="selectVibe(this)">💫 Bestie</button>

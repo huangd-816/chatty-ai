@@ -210,6 +210,13 @@ ${text}`
 });
 
 
+
+app.get('/get-history', (req, res) => {
+  const id = req.query.companionId || '0816';
+  const messages = getChatHistory(id);
+  res.json({ messages });
+});
+
 // ─── SYNC HISTORY FROM CLIENT ─────────────────
 app.post('/sync-history', (req, res) => {
   const { companionId, messages } = req.body;
@@ -483,4 +490,4 @@ ${history.slice(-8).map(m=>`${m.role}: ${m.content}`).join('\n')}`.trim();
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✨ lovemo running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✨ chatty-ai running on http://localhost:${PORT}`));

@@ -1,7 +1,7 @@
 {
-  "name": "0816-backend",
+  "name": "chatty-ai",
   "version": "1.0.0",
-  "description": "Lovemo demo backend for 0816 using Groq AI",
+  "description": "Chatty-AI demo backend for 0816 using Groq AI",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -11,6 +11,8 @@
     "color-hash": "^2.0.2",
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",
+    "emojibase": "^17.0.0",
+    "emojibase-data": "^17.0.0",
     "express": "^4.22.2",
     "groq-sdk": "^0.15.0"
   }
