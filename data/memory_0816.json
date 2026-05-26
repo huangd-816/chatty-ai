@@ -1,8 +1,8 @@
 {
   "userName": null,
   "affection": 100,
-  "chatCount": 90,
-  "lastInteraction": "2026-05-26T03:53:15.662Z",
+  "chatCount": 91,
+  "lastInteraction": "2026-05-26T04:37:59.381Z",
   "mood": "neutral",
   "topics": [
     "pets"
@@ -44,7 +44,8 @@
     "user greeted me",
     "user said cya bye",
     "user went to sleep at 1:30 am",
-    "user said good night"
+    "user said good night",
+    "user said 'oi'"
   ],
   "emotions": [
     {

@@ -1050,6 +1050,17 @@ function createGifActions(gifUrl, title) {
   return actions;
 }
 
+
+// ─── CUSTOM CONFIRM ───────────────────────────
+function showConfirm(message, onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;';
+  overlay.innerHTML = `<div style="background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;width:280px;text-align:center;"><div style="font-size:15px;color:#f0f0f0;margin-bottom:20px;">${message}</div><div style="display:flex;gap:10px;"><button id="confirmCancel" style="flex:1;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0f0f0;cursor:pointer;font-size:14px;">Cancel</button><button id="confirmOk" style="flex:1;padding:10px;border-radius:12px;border:none;background:#ff3b30;color:#fff;cursor:pointer;font-size:14px;font-weight:600;">Delete</button></div></div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#confirmCancel').onclick = () => overlay.remove();
+  overlay.querySelector('#confirmOk').onclick = () => { overlay.remove(); onConfirm(); };
+}
+
 // ─── RENDER MESSAGE ───────────────────────────
 function renderMessage(item, sender) {
   const chat = document.getElementById('chat');
@@ -1141,6 +1152,39 @@ function renderMessage(item, sender) {
   const reactBtn = document.createElement('button'); reactBtn.className = 'msg-action-btn'; reactBtn.title = 'React'; reactBtn.innerHTML = '😊';
   reactBtn.onclick = e => { e.stopPropagation(); showReactionPicker(div, row); };
   actEl.appendChild(reactBtn);
+
+  // Delete button
+  const delBtn = document.createElement('button');
+  delBtn.className = 'msg-action-btn';
+  delBtn.title = 'Delete';
+  delBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff3b30" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>';
+  delBtn.style.cssText = 'background:rgba(255,59,48,0.08);border-color:rgba(255,59,48,0.2);';
+  delBtn.onclick = () => showConfirm('Delete this message?', () => {
+    row.style.opacity = '0'; row.style.transform = 'scale(0.9)'; row.style.transition = 'all 0.2s';
+    setTimeout(() => { row.remove(); saveChatToStorage(); }, 200);
+  });
+  actEl.appendChild(delBtn);
+
+  // Edit button (user text only)
+  if (sender === 'user' && item.type === 'text') {
+    const contentEl = div.querySelector('.translate-content') || div.querySelector('.msg-text-inner');
+    const editBtn = document.createElement('button');
+    editBtn.className = 'msg-action-btn';
+    editBtn.title = 'Edit';
+    editBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    editBtn.onclick = () => {
+      const txt = contentEl ? contentEl.textContent.trim() : (item.content || '');
+      document.getElementById('input').value = txt;
+      document.getElementById('input').focus();
+      window._editingRow = row;
+      window._editMode = true;
+      replyingTo = null;
+      const bar = document.getElementById('replyBar');
+      bar.classList.add('active', 'edit-mode');
+      document.getElementById('replyBarText').textContent = txt.slice(0, 50);
+    };
+    actEl.appendChild(editBtn);
+  }
 
   if (item.replyTo) {
     const q = document.createElement('div'); q.className = 'reply-quote';
@@ -1498,6 +1542,7 @@ function loadChatFromStorage(id) {
 }
 window.translateText = translateText;
 window.deleteMessage = deleteMessage;
+window.showConfirm = showConfirm;
 window.editMessage = editMessage;
 window.cancelEdit = cancelEdit;
 window.toggleTranscript = toggleTranscript;

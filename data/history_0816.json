@@ -1,14 +1,6 @@
 [
   {
     "role": "user",
-    "content": "why"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\":[\n       {\n           \"type\":\"text\",\n           \"content\":\"omg WAIT, are u okay?? 😨\",\n           \"textToRead\":\"omg WAIT, are u okay??\"\n       },\n       {\n           \"type\":\"voice\",\n           \"content\":\"0:02\",\n           \"textToRead\":\"like... u keep saying no, but i feel like there's something u're not telling me... can u pls spill the tea?\"\n       },\n       {\n           \"type\":\"text\",\n           \"content\":\"u can trust me, fr 🤗\",\n           \"textToRead\":\"u can trust me, fr\"\n       }\n   ]\n}"
-  },
-  {
-    "role": "user",
     "content": "whoa wait"
   },
   {
@@ -238,5 +230,13 @@
   {
     "role": "assistant",
     "content": "[\n{\n  \"messages\":[\n           {\n               \"type\":\"text\",\n               \"content\":\"lol okay, fair point 😂\",\n               \"textToRead\":\"lol okay, fair point\"\n           },\n           {\n               \"type\":\"voice\",\n               \"content\":\"0:04\",\n               \"textToRead\":\"okay but... like, can we start over or something? i feel like we're just going in circles\"}\n           ]},\n           {\n               \"type\":\"text\",\n               \"content\":\"what's on ur mind, mate? 🤗\",\n               \"textToRead\":\"what's on ur mind, mate?\"\n           }\n       \n]\n"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\": [\n    {\n      \"type\": \"text\",\n      \"content\": \"omg oi back atcha! what's up?\",\n      \"textToRead\": \"omg oi back atcha! what's up?\"\n    },\n    {\n      \"type\": \"voice\",\n      \"content\": \"0:03\",\n      \"textToRead\": \"lol we really just skipped all the pleasantries didn't we\"\n    },\n    {\n      \"type\": \"gif\",\n      \"query\": \"what's happening meme\",\n      \"textToRead\": \"\"\n    }\n  ],\n  \"memoryUpdates\": {\n    \"newFact\": \"user said 'oi'\"\n  }\n}"
   }
 ]
