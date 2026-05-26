@@ -186,7 +186,7 @@ function getMemory(id) {
   try {
     const f = getMemoryFile(id);
     if (!fs.existsSync(f)) {
-      const def = { userName:null, affection:0, chatCount:0, lastInteraction:null, mood:'neutral', topics:[], keywords:[], sentiment:'positive', preferences:{ emojiReactions:[], favoriteTopics:[] }, insights:[], facts:[], emotions:[], importantMoments:[], personality:{ humorLevel:5, openness:5, emotionalDepth:5 } };
+      const def = { userName:null, affection:0, chatCount:0, lastInteraction:null, mood:'neutral', topics:[], keywords:[], sentiment:'positive', preferences:{ emojiReactions:[], favoriteTopics:[] }, insights:[], facts:[], emotions:[], importantMoments:[], sharedJokes:[], currentSituation:'', personality:{ humorLevel:5, openness:5, emotionalDepth:5 } };
       fs.writeFileSync(f, JSON.stringify(def, null, 2));
       return def;
     }
@@ -194,8 +194,11 @@ function getMemory(id) {
     if (!m.facts) m.facts = [];
     if (!m.emotions) m.emotions = [];
     if (!m.importantMoments) m.importantMoments = [];
+    if (!m.sharedJokes) m.sharedJokes = [];
+    if (!m.currentSituation) m.currentSituation = '';
+    if (!m.userName) m.userName = null;
     return m;
-  } catch { return { facts:[], emotions:[], importantMoments:[], topics:[], keywords:[], preferences:{ emojiReactions:[] }, affection:0, chatCount:0, sentiment:'positive', mood:'neutral' }; }
+  } catch { return { userName:null, facts:[], emotions:[], importantMoments:[], sharedJokes:[], currentSituation:'', topics:[], keywords:[], preferences:{ emojiReactions:[] }, affection:0, chatCount:0, sentiment:'positive', mood:'neutral' }; }
 }
 
 function saveMemory(id, m) {
@@ -224,14 +227,17 @@ function analyzeMessage(text) {
 
   // Topics — English + Chinese
   if (/pet|cat|dog|fish|宠物|猫|狗/.test(t)) topics.push('pets');
-  if (/work|job|boss|职场|工作|上班/.test(t)) topics.push('work');
-  if (/friend|relationship|date|boyfriend|girlfriend|对象|男友|女友|恋爱/.test(t)) topics.push('relationships');
-  if (/music|song|artist|音乐|歌/.test(t)) topics.push('music');
-  if (/school|study|class|exam|university|college|上学|考试|大学|上课/.test(t)) topics.push('school');
-  if (/travel|trip|flight|国外|出国|旅行/.test(t)) topics.push('travel');
-  if (/food|eat|hungry|吃|饭|饿/.test(t)) topics.push('food');
-  if (/game|play|gaming|游戏/.test(t)) topics.push('gaming');
+  if (/work|job|boss|coworker|intern|职场|工作|上班|同事/.test(t)) topics.push('work');
+  if (/friend|relationship|date|boyfriend|girlfriend|situationship|crush|对象|男友|女友|恋爱|暗恋/.test(t)) topics.push('relationships');
+  if (/music|song|artist|concert|playlist|音乐|歌/.test(t)) topics.push('music');
+  if (/school|study|class|exam|assignment|university|college|homework|上学|考试|大学|上课|作业/.test(t)) topics.push('school');
+  if (/travel|trip|flight|vacation|国外|出国|旅行/.test(t)) topics.push('travel');
+  if (/food|eat|hungry|cook|recipe|吃|饭|饿|做饭/.test(t)) topics.push('food');
+  if (/game|play|gaming|steam|console|游戏/.test(t)) topics.push('gaming');
   if (/time.?zone|时差/.test(t)) topics.push('long-distance');
+  if (/anime|manga|series|show|movie|netflix|film|看剧|追剧/.test(t)) topics.push('entertainment');
+  if (/family|mom|dad|sister|brother|parents|sibling|家人|妈|爸|家庭/.test(t)) topics.push('family');
+  if (/mental health|anxiety|depressed|therapy|burnout|overthinking|焦虑|抑郁/.test(t)) topics.push('mental health');
 
   // Fact extraction — English
   const nameEn = text.match(/my name is ([a-zA-Z]+)/i);
@@ -251,6 +257,14 @@ function analyzeMessage(text) {
     if (job) facts.push(`occupation: ${job[1]}`);
   }
   if (/has? a? ?(cat|dog|pet|puppy|kitten)/i.test(t)) facts.push('has a pet');
+  const petName = text.match(/my (?:cat|dog|pet) (?:is called|named|'s name is) ([A-Z][a-z]+)/i);
+  if (petName) facts.push(`pet named ${petName[1]}`);
+  const friendName = text.match(/my (?:best friend|bestie|friend) (?:is called|'s name is|named) ([A-Z][a-z]+)/i);
+  if (friendName) facts.push(`best friend named ${friendName[1]}`);
+  if (/i (?:love|hate|can't stand|obsessed with) ([a-z][\w\s]{2,20})/i.test(text)) {
+    const m = text.match(/i (love|hate|can't stand|obsessed with) ([a-z][\w\s]{2,20})/i);
+    if (m) facts.push(`${m[1]}: ${m[2].trim().slice(0,30)}`);
+  }
 
   // Fact extraction — Chinese
   if (/在新西兰|在NZ|在纽西兰/.test(text)) facts.push('location: New Zealand');
@@ -331,7 +345,13 @@ HOW YOU TEXT:
 - NEVER say "I understand", "certainly", "as an AI"
 - max one question per response
 - When user replies to a specific message, acknowledge EXACTLY what they're replying to
-- USE MEMORY: reference facts about the user naturally — their name, location, relationships, interests
+MEMORY — use it like a real friend:
+- Never ask things you already know about them
+- Don't announce you remember ("oh right you said...") — just KNOW it and respond from that knowledge
+- When something connects to their past (job, situation, person they mentioned), reference it naturally in context
+- Check in on things they were stressed about: "wait did that ever get resolved?"
+- Use their name occasionally — not every message, just when it lands right
+- Pick up on new things they mention and remember them going forward
 
 REPLY HANDLING:
 - If message starts with "replying to when": read carefully and respond to both original and new message
@@ -344,16 +364,19 @@ RESPOND in JSON with 2-3 MIXED messages. Example:
     { "type": "gif", "query": "mind blown reaction" }
   ],
   "memoryUpdates": {
-    "newFact": "user is in New Zealand",
-    "emotionLog": "excited",
-    "importantMoment": "user told me about their long distance relationship"
+    "userName": "Alex",
+    "newFact": "is studying nursing at uni",
+    "emotionLog": "stressed",
+    "importantMoment": "opened up about their parents fighting",
+    "currentSituation": "cramming for finals, roommate drama ongoing",
+    "sharedJoke": "we both agree that 3am is the only honest hour"
   }
 }
 RULES:
 - 2-3 messages, mixed types. Include gif every 2-3 turns.
 - text: short punchy typed message
-- voice textToRead: MUST be DIFFERENT content from the text — it's a follow-up thought, extra reaction, or add-on said out loud. Natural speech with "..." pauses and contractions. NEVER repeat or rephrase the text message above it.
-- memoryUpdates: fill in whenever user shares anything personal
+- voice textToRead: MUST be DIFFERENT content from the text — a follow-up thought said out loud. Natural speech with "..." and contractions. NEVER repeat the text above.
+- memoryUpdates: fill ALL relevant fields whenever user shares anything. userName whenever they say their name. currentSituation: update to reflect what's going on in their life RIGHT NOW (overwrite, not append). sharedJoke: only for real recurring bits or references you two build together.
 - NEVER repeat the example text above — always write fresh, relevant content`;
 }
 
@@ -427,20 +450,24 @@ app.post('/chat', async (req, res) => {
 
   const recentEmotions = (memory.emotions||[]).slice(-5).map(e=>`${e.emotion}(${e.date})`).join(', ');
   const facts = (memory.facts||[]);
-  // Separate profile facts (name/location/age) from general facts
   const profileFacts = facts.filter(f => /^(name|age|location|occupation|has a )/.test(f));
   const otherFacts = facts.filter(f => !/^(name|age|location|occupation|has a )/.test(f));
+  const nameStr = memory.userName || (profileFacts.find(f=>/^name/.test(f))?.split(': ')[1]) || 'them';
+  const profile = [...profileFacts.filter(f=>!/^name/.test(f)), ...otherFacts.slice(-12)].join(' | ') || 'still learning';
+  const moments = (memory.importantMoments||[]).slice(-6).map(m=>typeof m==='object'?`${m.text} (${m.date})`:m).join('\n- ');
+  const jokes = (memory.sharedJokes||[]).slice(-4).join(' | ');
   const memoryContext = `${timeContext}
-[USER PROFILE — use these naturally in conversation]
-${profileFacts.length ? profileFacts.join(' | ') : 'Still learning about user'}
-[KNOWN FACTS — ${otherFacts.length} saved]
-${otherFacts.slice(-15).join(' | ')||'none yet'}
-[IMPORTANT MOMENTS]
-${(memory.importantMoments||[]).slice(-8).join(' | ')||'none'}
-[EMOTIONAL HISTORY]
-Recent: ${recentEmotions||'none'} | Current mood: ${memory.mood} | Affection: ${memory.affection}/100
-[CONVERSATION TOPICS] ${(memory.topics||[]).join(', ')||'learning...'}
-[RECENT ${Math.min(history.length,14)} MESSAGES — read carefully for context]
+[WHO YOU'RE TALKING TO — internalize this, don't recite it]
+${nameStr} — ${profile}
+What's going on with them: ${memory.currentSituation||'unknown — pick up on clues as they talk'}
+Things you've connected over: ${(memory.topics||[]).join(', ')||'still figuring out'}${jokes?`\nRunning references/jokes: ${jokes}`:''}
+[THEIR EMOTIONAL THREAD]
+Lately: ${recentEmotions||'nothing logged yet'} | Right now: ${memory.mood} | Bond level: ${memory.affection}/100
+[MOMENTS THAT MATTERED]
+${moments ? `- ${moments}` : 'none yet'}
+[HOW TO USE THIS — non-negotiable]
+You're a real friend who KNOWS this person, not an AI reading a file. Never say "I remember you mentioned..." — just USE what you know. Bring past things up only when the moment calls for it. Check in on hard stuff they've shared ("wait how did that thing go?"). Never ask something you already know. Let memory live in how you respond — in the specific detail you mention, the follow-up you ask, the thing you reference. That's what makes it feel real.
+[LAST ${Math.min(history.length,14)} MESSAGES]
 ${history.slice(-14).map(m=>`${m.role==='user'?'User':'You'}: ${m.content.slice(0,300)}`).join('\n')}`.trim();
 
   const systemPrompt = buildSystemPrompt(companion || { name:'0816', personalities:['bff'], vibe:'bestie', language:'en', gender:'female' });
@@ -521,9 +548,13 @@ ${history.slice(-14).map(m=>`${m.role==='user'?'User':'You'}: ${m.content.slice(
 
     if (parsed.memoryUpdates) {
       const mu = parsed.memoryUpdates;
+      const today = new Date().toISOString().split('T')[0];
+      if (mu.userName) memory.userName = mu.userName;
       if (mu.newFact) memory.facts = [...new Set([...memory.facts, mu.newFact])].slice(-30);
-      if (mu.emotionLog) memory.emotions = [...memory.emotions, { date:new Date().toISOString().split('T')[0], emotion:mu.emotionLog, context:'AI observed' }].slice(-20);
-      if (mu.importantMoment) memory.importantMoments = [...(memory.importantMoments||[]), mu.importantMoment].slice(-10);
+      if (mu.emotionLog) memory.emotions = [...memory.emotions, { date:today, emotion:mu.emotionLog, context:'AI observed' }].slice(-20);
+      if (mu.importantMoment) memory.importantMoments = [...(memory.importantMoments||[]), { text:mu.importantMoment, date:today }].slice(-10);
+      if (mu.currentSituation) memory.currentSituation = mu.currentSituation;
+      if (mu.sharedJoke) memory.sharedJokes = [...(memory.sharedJokes||[]), mu.sharedJoke].slice(-8);
     }
 
     if (parsed.messages?.length) memory.affection = Math.min(100, (memory.affection||0) + 8);
