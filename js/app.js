@@ -48,7 +48,11 @@ function renderFacePresets() {
   const grid = document.getElementById('facePresetGrid');
   if (!grid) return;
 
-  let visible = FACE_PRESETS.filter(p => p.gender === 'any' || p.gender === modalGender);
+  // Character presets (charType set) are search-only — show only when selected
+  let visible = FACE_PRESETS.filter(p => {
+    if (p.charType) return p.id === modalFacePreset;
+    return p.gender === 'any' || p.gender === modalGender;
+  });
 
   // Always keep 'auto' first, then language-matches, then others
   visible.sort((a, b) => {
@@ -157,6 +161,13 @@ const SMART_KEYWORDS = {
     ca_bakugo:   ['bakugo','kacchan','katsuki','explosion','mha','my hero','baku'],
     ca_tamaki:   ['tamaki','suoh','ouran','host club','king','princely'],
     ca_kyoya:    ['kyoya','ootori','shadow king','ouran','host club','glasses'],
+    ca_makima:   ['makima','control devil','chainsaw man','csm'],
+    ca_power:    ['power','blood devil','fiend','chainsaw man','csm'],
+    ca_yor:      ['yor','yor forger','thorn princess','spy family','assassin mom'],
+    ca_loid:     ['loid','loid forger','twilight','spy family','phantom'],
+    ca_dio:      ['dio','dio brando','za warudo','jojo','vampire','time stop'],
+    ca_zenitsu:  ['zenitsu','agatsuma','thunder','demon slayer','coward','yellow'],
+    ca_toga:     ['toga','himiko','toga himiko','mha','villain','blood quirk'],
   },
 };
 
@@ -800,6 +811,18 @@ const FACE_PRESETS = [
   // OHSHC
   { id:'ca_tamaki',  name:'Tamaki',     charType:'anime',   vibe:'Princely Host King', gender:'male',   langs:['ja','en'],      catchphrase:'You are my precious little princess.',          url:'https://i.pravatar.cc/400?u=tamaki-suoh-ouran-host-king' },
   { id:'ca_kyoya',   name:'Kyoya',      charType:'anime',   vibe:'Shadow King',        gender:'male',   langs:['ja','en'],      catchphrase:"I simply protect what's mine — that includes you.", url:'https://i.pravatar.cc/400?u=kyoya-ootori-shadow-king-ouran' },
+  // Chainsaw Man
+  { id:'ca_makima',  name:'Makima',     charType:'anime',   vibe:'Control Devil',      gender:'female', langs:['ja','en'],      catchphrase:'You belong to me now.',                                        url:'https://i.pravatar.cc/400?u=makima-control-devil-csm' },
+  { id:'ca_power',   name:'Power',      charType:'anime',   vibe:'Blood Devil Fiend',  gender:'female', langs:['ja','en'],      catchphrase:"I, Power, am the greatest fiend who ever lived!",              url:'https://i.pravatar.cc/400?u=power-blood-devil-csm' },
+  // Spy x Family
+  { id:'ca_yor',     name:'Yor',        charType:'anime',   vibe:'Thorn Princess',     gender:'female', langs:['ja','en'],      catchphrase:"I'll protect this family with my life.",                       url:'https://i.pravatar.cc/400?u=yor-forger-spy-family-assassin' },
+  { id:'ca_loid',    name:'Loid',       charType:'anime',   vibe:'Phantom Spy',        gender:'male',   langs:['ja','en'],      catchphrase:'Every mission is a step toward peace.',                        url:'https://i.pravatar.cc/400?u=loid-forger-twilight-spy-family' },
+  // JoJo's Bizarre Adventure
+  { id:'ca_dio',     name:'DIO',        charType:'anime',   vibe:'World-Stopping Vampire', gender:'male', langs:['ja','en'],    catchphrase:'ZA WARUDO! Time stops for me alone.',                          url:'https://i.pravatar.cc/400?u=dio-brando-zawarudo-jojo' },
+  // Demon Slayer extras
+  { id:'ca_zenitsu', name:'Zenitsu',    charType:'anime',   vibe:'Thunder Coward',     gender:'male',   langs:['ja','en'],      catchphrase:"I want to get married before I die!",                          url:'https://i.pravatar.cc/400?u=zenitsu-agatsuma-thunder-coward' },
+  // My Hero Academia
+  { id:'ca_toga',    name:'Toga',       charType:'anime',   vibe:'Blood-Loving Villain', gender:'female', langs:['ja','en'],    catchphrase:"I just wanna be like the people I love!",                      url:'https://i.pravatar.cc/400?u=toga-himiko-mha-villain' },
 ];
 
 const FACE_STYLES = {
