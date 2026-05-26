@@ -35,6 +35,7 @@ let modalVoiceStyle = 'auto';
 let modalFacePreset = 'auto';
 let modalFaceName = '';
 let modalFaceCustomUrl = '';
+let modalCatchphrase = '';
 let editingId = null;
 
 function selectVoice(btn) {
@@ -72,9 +73,11 @@ function renderFacePresets() {
       </button>`;
   }
 
+  const charBadge = { anime:'⚔️', game:'🎮', fiction:'📖' };
   grid.innerHTML = visible.map(p => `
     <button class="face-preset-btn ${modalFacePreset === p.id ? 'selected' : ''}"
             data-face="${p.id}" onclick="selectFacePreset(this)">
+      ${p.charType ? `<span class="face-char-badge face-char-${p.charType}">${charBadge[p.charType]}</span>` : ''}
       ${p.url
         ? `<img class="face-preset-thumb" src="${p.url}" alt="${p.name}" loading="lazy">`
         : `<div class="face-preset-thumb face-preset-auto">✨</div>`}
@@ -97,10 +100,48 @@ const SMART_KEYWORDS = {
     soft:    ['soft','cute','kawaii','sweet','gentle','innocent','dreamy','romantic','pastel'],
     natural: ['natural','casual','everyday','simple','clean','fresh','real','approachable'],
   },
+  // Character name aliases for smart matching
+  charAlias: {
+    ca_zero2:    ['zero two','002','darling franxx','darling'],
+    ca_rem:      ['rem','rezero','re zero','maid'],
+    ca_mikasa:   ['mikasa','attack titan','aot','ackerman'],
+    ca_megumin:  ['megumin','explosion','konosuba','crimson'],
+    ca_aqua:     ['aqua','goddess','konosuba'],
+    ca_asuna:    ['asuna','sao','sword art','kirito'],
+    ca_nezuko:   ['nezuko','demon slayer','kimetsu'],
+    ca_2b:       ['2b','nier','automata','android warrior'],
+    ca_jinx:     ['jinx','arcane','lol','league of legends'],
+    ca_hutao:    ['hu tao','hutao','genshin','funeral'],
+    ca_ahri:     ['ahri','nine tail','ninetail','fox girl','lol'],
+    ca_hermione: ['hermione','granger','harry potter','hogwarts'],
+    ca_arya:     ['arya','stark','game of thrones','got','assassin'],
+    ca_gojo:     ['gojo','satoru','jjk','jujutsu kaisen','six eyes','infinity'],
+    ca_levi:     ['levi','captain levi','aot','attack titan','survey corps'],
+    ca_kakashi:  ['kakashi','copy ninja','naruto','hatake','sharingan'],
+    ca_deku:     ['deku','midoriya','mha','my hero academia','plus ultra'],
+    ca_vegeta:   ['vegeta','dbz','dragon ball','saiyan','prince vegeta'],
+    ca_nanami:   ['nanami','kento','jjk','salaryman'],
+    ca_zoro:     ['zoro','roronoa','one piece','three sword','swordsman'],
+    ca_itachi:   ['itachi','uchiha','naruto','crow','akatsuki'],
+    ca_luffy:    ['luffy','one piece','pirate king','straw hat'],
+    ca_geralt:   ['geralt','witcher','white wolf','rivia'],
+    ca_cloud:    ['cloud','strife','ff7','final fantasy','soldier'],
+    ca_kazuha:   ['kazuha','genshin','anemo','samurai poet'],
+    ca_sherlock: ['sherlock','holmes','detective','watson','baker street'],
+    ca_ironman:  ['iron man','tony stark','stark','avenger'],
+    ca_batman:   ['batman','bruce wayne','dark knight','gotham'],
+  },
 };
 
 function smartFaceMatch(query) {
   const q = query.toLowerCase();
+  // Check character alias match first
+  for (const [id, aliases] of Object.entries(SMART_KEYWORDS.charAlias || {})) {
+    if (aliases.some(a => q.includes(a) || a.includes(q))) {
+      const p = FACE_PRESETS.find(fp => fp.id === id);
+      if (p && (p.gender === 'any' || p.gender === modalGender)) return { type:'preset', id };
+    }
+  }
   // Check exact or partial name match in library
   const nameMatch = FACE_PRESETS.find(p =>
     p.id !== 'auto' && (p.gender === 'any' || p.gender === modalGender) &&
@@ -251,6 +292,8 @@ function selectFacePreset(btn) {
   modalFacePreset = btn.dataset.face;
   document.querySelectorAll('.face-preset-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+  const preset = FACE_PRESETS.find(p => p.id === modalFacePreset);
+  modalCatchphrase = preset?.catchphrase || '';
 }
 
 function openCreateModal() {
@@ -259,6 +302,7 @@ function openCreateModal() {
   modalFacePreset = 'auto';
   modalFaceName = '';
   modalFaceCustomUrl = '';
+  modalCatchphrase = '';
   document.getElementById('modalTitle').textContent = 'New AI Companion';
   document.getElementById('companionNameInput').value = '';
   document.querySelectorAll('.avatar-opt').forEach(e => e.classList.remove('selected'));
@@ -307,6 +351,7 @@ function editCurrentCompanion() {
   modalFacePreset = c.facePreset || 'auto';
   modalFaceName = c.facePreset === 'custom' ? (c.faceName || '') : '';
   modalFaceCustomUrl = c.faceCustomUrl || '';
+  modalCatchphrase = c.catchphrase || '';
   goStep(1);
   document.getElementById('createModal').classList.add('active');
   closeScreen('profile');
@@ -379,6 +424,7 @@ function createCompanion() {
     c.personalities = modalPersonalities; c.language = modalLang; c.gender = modalGender;
     c.voiceStyle = modalVoiceStyle; c.facePreset = modalFacePreset;
     c.faceName = modalFaceName; c.faceCustomUrl = modalFacePreset === 'custom' ? modalFaceCustomUrl : '';
+    c.catchphrase = modalCatchphrase;
     saveCompanions();
     renderSidebar();
     switchCompanion(editingId);
@@ -391,6 +437,7 @@ function createCompanion() {
       vibe: modalVibe, language: modalLang, gender: modalGender,
       voiceStyle: modalVoiceStyle, facePreset: modalFacePreset,
       faceName: modalFaceName, faceCustomUrl: modalFacePreset === 'custom' ? modalFaceCustomUrl : '',
+      catchphrase: modalCatchphrase,
       created: Date.now(), lastMessage: '', lastTime: Date.now()
     });
     saveCompanions();
@@ -658,6 +705,38 @@ const FACE_PRESETS = [
   { id:'nb2',  name:'Sage',       vibe:'Dreamy',         gender:'nonbinary', langs:[],               url:'https://i.pravatar.cc/400?u=sage-dreamy' },
   { id:'nb3',  name:'River',      vibe:'Indie',          gender:'nonbinary', langs:['en'],           url:'https://i.pravatar.cc/400?u=river-indie' },
   { id:'nb4',  name:'Aether',     vibe:'Ethereal AI',    gender:'nonbinary', langs:[],               url:'https://i.pravatar.cc/400?u=aether-ethereal' },
+
+  // ── Character.AI / Anime / Game inspired (female) ──────────────────────────
+  { id:'ca_zero2',   name:'Zero Two',   charType:'anime',   vibe:'Darling Vibes',      gender:'female', langs:['ja','ko','en'], catchphrase:'Darling~',                                  url:'https://i.pravatar.cc/400?u=zero-two-darling-002' },
+  { id:'ca_rem',     name:'Rem',        charType:'anime',   vibe:'Devoted Maid',       gender:'female', langs:['ja','en'],      catchphrase:"I'll always be by your side ✨",             url:'https://i.pravatar.cc/400?u=rem-rezero-blue-maid' },
+  { id:'ca_mikasa',  name:'Mikasa',     charType:'anime',   vibe:'Fierce Warrior',     gender:'female', langs:['ja','en'],      catchphrase:"I'll protect you no matter what.",          url:'https://i.pravatar.cc/400?u=mikasa-ackerman-aot' },
+  { id:'ca_megumin', name:'Megumin',    charType:'anime',   vibe:'Explosion Mage',     gender:'female', langs:['ja','en'],      catchphrase:'EXPLOSION!!!',                              url:'https://i.pravatar.cc/400?u=megumin-konosuba-crimson' },
+  { id:'ca_aqua',    name:'Aqua',       charType:'anime',   vibe:'Chaotic Goddess',    gender:'female', langs:['ja','en'],      catchphrase:"I'm literally a goddess, show some respect.", url:'https://i.pravatar.cc/400?u=aqua-konosuba-goddess2' },
+  { id:'ca_asuna',   name:'Asuna',      charType:'anime',   vibe:'Knight of Blood',    gender:'female', langs:['ja','en'],      catchphrase:"Let's fight together — I've got your back.", url:'https://i.pravatar.cc/400?u=asuna-sao-lightning' },
+  { id:'ca_nezuko',  name:'Nezuko',     charType:'anime',   vibe:'Demon Sister',       gender:'female', langs:['ja','en'],      catchphrase:'*determined growl* 🎋',                     url:'https://i.pravatar.cc/400?u=nezuko-demon-slayer-pink' },
+  { id:'ca_2b',      name:'2B',         charType:'game',    vibe:'Android Warrior',    gender:'female', langs:['en','ja'],      catchphrase:'Glory to Mankind.',                         url:'https://i.pravatar.cc/400?u=2b-nier-automata-white' },
+  { id:'ca_jinx',    name:'Jinx',       charType:'game',    vibe:'Chaotic Gremlin',    gender:'female', langs:['en'],           catchphrase:"It's a great day to blow something up! 💥", url:'https://i.pravatar.cc/400?u=jinx-lol-arcane-blue' },
+  { id:'ca_hutao',   name:'Hu Tao',     charType:'game',    vibe:'Spooky Director',    gender:'female', langs:['zh','en'],      catchphrase:'Hehe~ Want to talk about funeral arrangements? 💀', url:'https://i.pravatar.cc/400?u=hutao-genshin-ghost' },
+  { id:'ca_ahri',    name:'Ahri',       charType:'game',    vibe:'Nine-Tailed Fox',    gender:'female', langs:['ko','en'],      catchphrase:"My magic comes with a price~",              url:'https://i.pravatar.cc/400?u=ahri-lol-ninetail-fox' },
+  { id:'ca_hermione',name:'Hermione',   charType:'fiction', vibe:'Bookworm Witch',     gender:'female', langs:['en'],           catchphrase:"It's leviOsa, not leviosA.",                url:'https://i.pravatar.cc/400?u=hermione-granger-gryffindor' },
+  { id:'ca_arya',    name:'Arya',       charType:'fiction', vibe:'Faceless Assassin',  gender:'female', langs:['en'],           catchphrase:'Not today.',                                url:'https://i.pravatar.cc/400?u=arya-stark-got' },
+
+  // ── Character.AI / Anime / Game inspired (male) ────────────────────────────
+  { id:'ca_gojo',    name:'Gojo',       charType:'anime',   vibe:'Strongest There Is', gender:'male',   langs:['ja','en'],      catchphrase:'Throughout Heaven and Earth, I alone am the honored one.', url:'https://i.pravatar.cc/400?u=gojo-satoru-infinity' },
+  { id:'ca_levi',    name:'Levi',       charType:'anime',   vibe:"Humanity's Strongest", gender:'male', langs:['ja','en'],      catchphrase:"Tch. Don't make me repeat myself.",        url:'https://i.pravatar.cc/400?u=levi-ackerman-captain' },
+  { id:'ca_kakashi', name:'Kakashi',    charType:'anime',   vibe:'Copy Ninja',         gender:'male',   langs:['ja','en'],      catchphrase:"Those who break the rules are trash — but those who abandon their comrades are worse than trash.", url:'https://i.pravatar.cc/400?u=kakashi-hatake-sharingan' },
+  { id:'ca_deku',    name:'Deku',       charType:'anime',   vibe:'Symbol of Hope',     gender:'male',   langs:['ja','en'],      catchphrase:'Go beyond — PLUS ULTRA! 💪',               url:'https://i.pravatar.cc/400?u=deku-midoriya-one-for-all' },
+  { id:'ca_vegeta',  name:'Vegeta',     charType:'anime',   vibe:'Prince of Saiyans',  gender:'male',   langs:['ja','en'],      catchphrase:"It's over 9000!",                           url:'https://i.pravatar.cc/400?u=vegeta-saiyan-blue' },
+  { id:'ca_nanami',  name:'Nanami',     charType:'anime',   vibe:'Salaryman Sorcerer', gender:'male',   langs:['ja','en'],      catchphrase:'Overtime is someone else\'s problem.',      url:'https://i.pravatar.cc/400?u=nanami-kento-suit' },
+  { id:'ca_zoro',    name:'Zoro',       charType:'anime',   vibe:'World\'s Greatest',  gender:'male',   langs:['ja','en'],      catchphrase:'Nothing happened.',                         url:'https://i.pravatar.cc/400?u=zoro-roronoa-three-sword' },
+  { id:'ca_itachi',  name:'Itachi',     charType:'anime',   vibe:'Tragic Prodigy',     gender:'male',   langs:['ja','en'],      catchphrase:"You'll spend the rest of your life running from me.", url:'https://i.pravatar.cc/400?u=itachi-uchiha-crow' },
+  { id:'ca_luffy',   name:'Luffy',      charType:'anime',   vibe:'King of Pirates',    gender:'male',   langs:['ja','en'],      catchphrase:"I'm going to be King of the Pirates!",     url:'https://i.pravatar.cc/400?u=luffy-straw-hat-pirate' },
+  { id:'ca_geralt',  name:'Geralt',     charType:'game',    vibe:'The Witcher',        gender:'male',   langs:['en'],           catchphrase:"Wind's howling.",                           url:'https://i.pravatar.cc/400?u=geralt-witcher-white-wolf' },
+  { id:'ca_cloud',   name:'Cloud',      charType:'game',    vibe:'Ex-SOLDIER',         gender:'male',   langs:['en','ja'],      catchphrase:'Not interested.',                          url:'https://i.pravatar.cc/400?u=cloud-strife-buster' },
+  { id:'ca_kazuha',  name:'Kazuha',     charType:'game',    vibe:'Wandering Poet',     gender:'male',   langs:['zh','en'],      catchphrase:'In the poetry of the wind, all things are beautiful.', url:'https://i.pravatar.cc/400?u=kazuha-genshin-anemo' },
+  { id:'ca_sherlock',name:'Sherlock',   charType:'fiction', vibe:'Consulting Detective', gender:'male', langs:['en'],           catchphrase:'Elementary, my dear Watson.',               url:'https://i.pravatar.cc/400?u=sherlock-holmes-consulting' },
+  { id:'ca_ironman', name:'Tony',       charType:'fiction', vibe:'Genius Billionaire', gender:'male',   langs:['en'],           catchphrase:'I am Iron Man.',                           url:'https://i.pravatar.cc/400?u=tony-stark-ironman-arc' },
+  { id:'ca_batman',  name:'Batman',     charType:'fiction', vibe:'Dark Knight',        gender:'male',   langs:['en'],           catchphrase:"I'm Batman.",                              url:'https://i.pravatar.cc/400?u=batman-dark-knight-gotham' },
 ];
 
 const FACE_STYLES = {

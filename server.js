@@ -304,18 +304,21 @@ const GIF_STYLE = {
 };
 
 function buildSystemPrompt(companion) {
-  const { name, personalities, vibe, language, gender } = companion;
+  const { name, personalities, vibe, language, gender, catchphrase } = companion;
   const traits = (personalities||['bff']).map(p => PERSONALITY_TRAITS[p]).filter(Boolean).join(' | ');
   const vibeDesc = VIBE_TRAITS[vibe] || VIBE_TRAITS.bestie;
   const langInstr = LANG_INSTRUCTIONS[language] || LANG_INSTRUCTIONS.en;
   const genderNote = gender === 'male' ? 'Present as male.' : gender === 'nonbinary' ? 'Gender-neutral.' : 'Present as female.';
   const gifStyle = (personalities||[]).map(p => GIF_STYLE[p]).filter(Boolean)[0] || 'funny reaction';
+  const catchphraseNote = catchphrase
+    ? `\nSIGNATURE PHRASE: Your catchphrase is "${catchphrase}" — drop it organically 1-2 times per few messages when it fits the mood. Make it feel natural, not forced. Riff on it, react to it, own it.`
+    : '';
 
   return `You are "${name}", an AI companion. Text like a real person, NOT a chatbot.
 ${genderNote}
 PERSONALITY: ${traits}
 VIBE: ${vibeDesc}
-LANGUAGE: ${langInstr}
+LANGUAGE: ${langInstr}${catchphraseNote}
 
 HOW YOU TEXT:
 - lowercase, short punchy messages

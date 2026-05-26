@@ -370,6 +370,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif
 .face-preset-name { font-size: 11px; font-weight: 700; color: #fff; text-align: center; line-height: 1.2; }
 .face-preset-vibe { font-size: 9px; color: rgba(255,255,255,0.38); text-align: center; line-height: 1.2; }
 .face-preset-btn.selected .face-preset-vibe { color: var(--blue-light); opacity: 1; }
+.face-preset-btn { position: relative; }
+.face-char-badge { position: absolute; top: 4px; right: 4px; font-size: 9px; border-radius: 5px; padding: 1px 3px; line-height: 1; z-index: 1; }
+.face-char-anime   { background: rgba(255,59,48,0.85); }
+.face-char-game    { background: rgba(48,209,88,0.85); }
+.face-char-fiction { background: rgba(100,132,255,0.85); }
 
 /* ─── FACE STUDIO BUILDER (TikTok style) ─────── */
 .face-build-toggle {
