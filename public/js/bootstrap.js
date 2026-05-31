@@ -8,9 +8,10 @@
 import * as utils from './utils.js';
 import * as gamification from './gamification.js';
 import * as gifs from './gifs.js';
+import * as voice from './voice.js';
 import { state, saveCompanions, getCompanion, getCurrentCompanion, chatCaches } from './state.js';
 
-Object.assign(window, utils, gamification, gifs, {
+Object.assign(window, utils, gamification, gifs, voice, {
   state,
   saveCompanions,
   getCompanion,

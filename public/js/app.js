@@ -632,10 +632,10 @@ function switchCompanion(id) {
   _refreshXpDisplay(id);
   _applyCompanionPhotos(c);
 
-  // Match voice recognition language to companion
-  if (recognition) {
+  // Match voice recognition language to companion (recognition lives in voice.js)
+  if (window.recognition) {
     const langMap = { zh:'zh-CN', ja:'ja-JP', ko:'ko-KR', es:'es-ES', fr:'fr-FR' };
-    recognition.lang = langMap[c.language] || 'en-US';
+    window.recognition.lang = langMap[c.language] || 'en-US';
   }
 
   // Update sidebar active state
@@ -1669,64 +1669,8 @@ function toggleCamera(btn) {
 // SAVED GIFS, GIF vision, TikTok actions, and the picker -> gifs.js
 // (state.savedGifs -> state.savedGifs; all functions on window via bootstrap)
 
-// ─── VOICE (ElevenLabs) ───────────────────────
-let voicePlaying = false;
-let currentAudio = null;
-
-async function playVoice(text) {
-  if (!text?.trim() || voicePlaying) return;
-
-  // Clean text for TTS
-  const clean = text
-    .replace(/\.\.\./g, ', ')
-    .replace(/omg/gi, 'oh my god')
-    .replace(/lmao/gi, 'lmao')
-    .replace(/ngl/gi, 'not gonna lie')
-    .replace(/tbh/gi, 'to be honest')
-    .replace(/fr/gi, 'for real')
-    .trim();
-
-  voicePlaying = true;
-
-  try {
-    const companion = getCurrentCompanion();
-    const res = await fetch('/tts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: clean, companion })
-    });
-
-    if (!res.ok) {
-      console.warn('TTS failed, falling back to browser voice');
-      fallbackVoice(clean);
-      return;
-    }
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    // Stop any currently playing audio
-    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-
-    currentAudio = new Audio(url);
-    currentAudio.onended = () => { voicePlaying = false; URL.revokeObjectURL(url); currentAudio = null; };
-    currentAudio.onerror = () => { voicePlaying = false; URL.revokeObjectURL(url); };
-    currentAudio.play();
-
-  } catch (e) {
-    console.warn('ElevenLabs TTS error:', e);
-    fallbackVoice(clean);
-  }
-}
-
-// Fallback to browser speech if ElevenLabs fails
-function fallbackVoice(text) {
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = 0.88; u.pitch = 1.1; u.volume = 1.0;
-  u.onend = () => { voicePlaying = false; };
-  u.onerror = () => { voicePlaying = false; };
-  window.speechSynthesis.speak(u);
-}
+// VOICE (playVoice, fallbackVoice, playVoiceBar, animateWaves, toggleTranscript)
+// and speech recognition -> voice.js (functions on window via bootstrap)
 
 // ─── TYPING ───────────────────────────────────
 function showTyping() {
@@ -2049,21 +1993,7 @@ function renderMessage(item, sender) {
 
 // escapeHtml + _voicePlaceholderRE -> utils.js (on window via bootstrap)
 
-// ─── VOICE BAR ────────────────────────────────
-function playVoiceBar(btn) {
-  let el = btn;
-  while (el && !el.classList.contains('msg-voice')) el = el.parentElement;
-  if (!el) return;
-  const text = el.querySelector('.voice-text')?.textContent?.trim();
-  if (!text || _voicePlaceholderRE.test(text)) { showToast('no audio for this message'); return; }
-  animateWaves(el); playVoice(text);
-}
-
-function animateWaves(el) {
-  const bars = el.querySelectorAll('.wave-bar'); let tick = 0;
-  const iv = setInterval(()=>{ bars.forEach((b,i)=>b.classList.toggle('active',(tick+i)%3!==0)); tick++; }, 120);
-  setTimeout(()=>{ clearInterval(iv); bars.forEach(b=>b.classList.remove('active')); }, 2400);
-}
+// ─── VOICE BAR ───────────────────────────────  (playVoiceBar, animateWaves -> voice.js)
 
 // GIF picker (toggleGifPicker, switchGifTab, loadTrendingGifs, searchGifs,
 // renderGifGrid, sendGif, renderSavedGifsInPicker) -> gifs.js
@@ -2156,20 +2086,7 @@ async function sendToAI(text, originalText) {
   }
 }
 
-// ─── SPEECH RECOGNITION ───────────────────────
-let recognition = null, recognitionActive = false;
-const SpeechAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (SpeechAPI) {
-  recognition = new SpeechAPI(); recognition.lang='en-US'; recognition.continuous=false; recognition.interimResults=false;
-  recognition.onstart=()=>{ recognitionActive=true; document.getElementById('recordBtn').classList.add('recording'); };
-  recognition.onend=()=>{ recognitionActive=false; document.getElementById('recordBtn').classList.remove('recording'); };
-  recognition.onresult=e=>{ const t=Array.from(e.results).map(r=>r[0].transcript).join(''); if(t.trim()){ renderMessage({type:'text',content:t},'user'); sendToAI(t); } };
-  recognition.onerror=()=>{ recognitionActive=false; document.getElementById('recordBtn').classList.remove('recording'); };
-}
-document.getElementById('recordBtn').addEventListener('click',()=>{
-  if (!recognition) return;
-  if (recognitionActive) recognition.abort(); else try { recognition.start(); } catch {}
-});
+// SPEECH RECOGNITION -> voice.js
 
 // ─── IMAGE UPLOAD ─────────────────────────────
 document.getElementById('fileInput').addEventListener('change', async () => {
@@ -2295,15 +2212,7 @@ async function translateText(text, targetLang, btn) {
   }
 }
 
-// ─── VOICE TRANSCRIPT ─────────────────────────
-function toggleTranscript(btn) {
-  const voiceWrap = btn.closest('.msg-voice-wrap') || btn.closest('.msg');
-  const transcript = voiceWrap?.querySelector('.voice-transcript');
-  if (!transcript) return;
-  const isVisible = transcript.style.display !== 'none';
-  transcript.style.display = isVisible ? 'none' : 'block';
-  btn.classList.toggle('active', !isVisible);
-}
+// VOICE TRANSCRIPT (toggleTranscript) -> voice.js
 
 
 // ─── LOAD HISTORY FROM SERVER ─────────────────
