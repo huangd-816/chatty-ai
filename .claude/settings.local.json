@@ -44,7 +44,8 @@
       "Bash(npm run *)",
       "Bash(echo \"npm run verify EXIT CODE = $?\")",
       "Bash(grep -nE '\\\\b__TRACKED_VAR__\\\\b' public/js/app.js)",
-      "Bash(echo \"npm run verify EXIT=$?\")"
+      "Bash(echo \"npm run verify EXIT=$?\")",
+      "Bash(perl -i -pe 's/\\(?<!state\\\\.\\)\\\\bsavedGifs\\\\b/state.savedGifs/g' public/js/app.js)"
     ]
   },
   "enableAllProjectMcpServers": true,

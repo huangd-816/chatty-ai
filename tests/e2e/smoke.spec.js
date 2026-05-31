@@ -49,5 +49,9 @@ test('app boots, modules wire to window, sidebar renders, no JS errors', async (
   const name = await page.evaluate(() => window.getCurrentCompanion()?.name);
   expect(name).toBeTruthy();
 
+  // GIF module: opening the picker (toggleGifPicker) activates it without error.
+  await page.click('.gif-btn');
+  await expect(page.locator('#gifPicker')).toHaveClass(/active/);
+
   expect(errors, `uncaught page errors: ${errors.join(' | ')}`).toEqual([]);
 });

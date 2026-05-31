@@ -22,6 +22,9 @@ if (!state.companions) {
 
 state.currentId = localStorage.getItem('chatty-ai_current') || state.companions[0].id;
 
+// Saved GIFs for the current companion (reassigned in gifs.js + switchCompanion).
+state.savedGifs = JSON.parse(localStorage.getItem(`${state.currentId}_saved_gifs`) || '[]');
+
 export function saveCompanions() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.companions));
 }

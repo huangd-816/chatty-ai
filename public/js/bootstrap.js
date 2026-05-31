@@ -7,9 +7,10 @@
 // deferred, so this runs first and window.* is ready when app.js executes.
 import * as utils from './utils.js';
 import * as gamification from './gamification.js';
+import * as gifs from './gifs.js';
 import { state, saveCompanions, getCompanion, getCurrentCompanion, chatCaches } from './state.js';
 
-Object.assign(window, utils, gamification, {
+Object.assign(window, utils, gamification, gifs, {
   state,
   saveCompanions,
   getCompanion,
