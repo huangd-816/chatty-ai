@@ -18,7 +18,15 @@
       "Bash(python3 -m json.tool)",
       "Bash(git remote *)",
       "Bash(awk NR>=1456 && NR<=1460 *)",
-      "Bash(awk NR>=1790 && NR<=1805 *)"
+      "Bash(awk NR>=1790 && NR<=1805 *)",
+      "Bash(brew list *)",
+      "Read(//usr/local/bin/**)",
+      "Bash(mkdir -p ~/.npm-global)",
+      "Bash(npm config *)",
+      "Read(//Users/ahuang/**)",
+      "Bash(echo 'export PATH=\"$HOME/.npm-global/bin:$PATH\"')",
+      "Bash(npm install *)",
+      "Bash(~/.npm-global/bin/claude --version)"
     ]
   },
   "enableAllProjectMcpServers": true,

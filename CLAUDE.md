@@ -174,3 +174,18 @@ npx @claude-flow/cli@latest doctor --fix
 ```
 
 **Agent tool** handles execution (agents, files, code, git). **MCP tools** handle coordination (swarm, memory, hooks). **CLI** is the same via Bash.
+
+## Development Rules
+
+After every code change:
+
+1. Run `npm run verify`
+2. Fix all linting, type-checking, and test failures
+3. Repeat until `npm run verify` passes
+4. Do not consider the task complete until all checks pass
+5. Report:
+   - Files changed
+   - Commands run
+   - Test results
+
+When unsure, prioritize correctness over speed.
