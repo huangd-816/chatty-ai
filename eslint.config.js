@@ -48,7 +48,12 @@ export default [
   },
   {
     // Browser ES modules (Phase 2 extraction).
-    files: ['public/js/state.js', 'public/js/utils.js', 'public/js/gamification.js', 'public/js/gifs.js', 'public/js/voice.js', 'public/js/bootstrap.js'],
+    files: [
+      'public/js/state.js', 'public/js/utils.js', 'public/js/gamification.js',
+      'public/js/gifs.js', 'public/js/voice.js', 'public/js/faces.js',
+      'public/js/animeface.js', 'public/js/callface.js', 'public/js/call.js',
+      'public/js/bootstrap.js',
+    ],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

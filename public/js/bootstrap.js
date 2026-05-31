@@ -9,12 +9,15 @@ import * as utils from './utils.js';
 import * as gamification from './gamification.js';
 import * as gifs from './gifs.js';
 import * as voice from './voice.js';
+import * as call from './call.js'; // pulls in callface.js -> animeface.js + faces.js
+import { FACE_PRESETS } from './faces.js';
 import { state, saveCompanions, getCompanion, getCurrentCompanion, chatCaches } from './state.js';
 
-Object.assign(window, utils, gamification, gifs, voice, {
+Object.assign(window, utils, gamification, gifs, voice, call, {
   state,
   saveCompanions,
   getCompanion,
   getCurrentCompanion,
   chatCaches,
+  FACE_PRESETS,
 });

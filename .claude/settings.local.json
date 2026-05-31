@@ -46,7 +46,14 @@
       "Bash(grep -nE '\\\\b__TRACKED_VAR__\\\\b' public/js/app.js)",
       "Bash(echo \"npm run verify EXIT=$?\")",
       "Bash(perl -i -pe 's/\\(?<!state\\\\.\\)\\\\bsavedGifs\\\\b/state.savedGifs/g' public/js/app.js)",
-      "Bash(grep -nE '\\\\b__TRACKED_VAR__\\\\\\(' public/js/app.js)"
+      "Bash(grep -nE '\\\\b__TRACKED_VAR__\\\\\\(' public/js/app.js)",
+      "Bash(awk '/const FACE_PRESETS/{s=NR} /^function toggleCamera|^function setSelfProfilePhoto/{e=NR} END{print \"FACE_PRESETS starts ~\"s}' public/js/app.js)",
+      "Bash(sed -n '970,980p' public/js/app.js)",
+      "Bash(sed -n '1515,1605p' public/js/app.js)",
+      "Bash(awk 'NR<725 || NR>1670' public/js/app.js)",
+      "Bash(perl -i -ne 'print unless /^let state\\\\.callSpeaking = false;$/' call.js)",
+      "Bash(perl -i -ne \"print unless m{^import \\\\{ lightenColor \\\\}} or m{^// lightenColor -> utils\\\\.js}\" animeface.js)",
+      "Bash(perl -i -e '$seen=0; while\\(<>\\){ if\\(/^\\\\s*ca_nyanko:/\\){ $seen++; next if $seen>1; } print; }' callface.js)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -25,6 +25,10 @@ state.currentId = localStorage.getItem('chatty-ai_current') || state.companions[
 // Saved GIFs for the current companion (reassigned in gifs.js + switchCompanion).
 state.savedGifs = JSON.parse(localStorage.getItem(`${state.currentId}_saved_gifs`) || '[]');
 
+// Transient call flag: set in call.js (speakCallPhrase), read by the callface
+// animation loop. Lives here so the two modules share it without a cycle.
+state.callSpeaking = false;
+
 export function saveCompanions() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.companions));
 }

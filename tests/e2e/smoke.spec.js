@@ -27,11 +27,18 @@ test('app boots, modules wire to window, sidebar renders, no JS errors', async (
     currentId: window.state && window.state.currentId,
     // app.js's own functions remain global (classic script) for inline onclick.
     sendMessage: typeof window.sendMessage,
+    // call/face modules wired through bootstrap.
+    startVideoCall: typeof window.startVideoCall,
+    toggleMute: typeof window.toggleMute,
+    facePresets: Array.isArray(window.FACE_PRESETS) && window.FACE_PRESETS.length > 0,
   }));
   expect(wired.showToast).toBe('function');
   expect(wired.addXp).toBe('function');
   expect(wired.getCurrentCompanion).toBe('function');
   expect(wired.sendMessage).toBe('function');
+  expect(wired.startVideoCall).toBe('function');
+  expect(wired.toggleMute).toBe('function');
+  expect(wired.facePresets).toBe(true);
   expect(wired.hasState).toBe(true);
   expect(wired.currentId).toBeTruthy();
 
