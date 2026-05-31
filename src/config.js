@@ -11,10 +11,6 @@ const config = {
   groqApiKey: process.env.GROQ_API_KEY || null,
   giphyApiKey: process.env.GIPHY_API_KEY || null,
   elevenLabsApiKey: process.env.ELEVENLABS_API_KEY || null,
-  // Optional shared-secret gate. When unset, the API stays open (current
-  // behavior). When set, requests must send a matching `x-app-token` header.
-  appToken: process.env.APP_TOKEN || null,
-
   // ─── Session auth ───
   sessionTtlMs: 1000 * 60 * 60 * 24 * 30, // 30 days
   // Secure cookies require HTTPS. On by default in production; opt-in elsewhere.

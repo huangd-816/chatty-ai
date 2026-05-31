@@ -1,15 +1,13 @@
 // Transparent fetch wrapper for same-origin API calls.
 //
-//  - Attaches APP_TOKEN as `x-app-token` (only when the server injected one).
 //  - Attaches the CSRF token as `x-csrf-token` on mutating requests, read from
 //    the readable `csrf` cookie set at login.
-//  - Same-origin ONLY: never leaks tokens to third parties (Giphy, pravatar, …).
+//  - Same-origin ONLY: never leaks anything to third parties (Giphy, pravatar, …).
 //  - Sends cookies (credentials) so the session travels with each request.
 //
 // No call-site changes needed: every existing fetch('/chat'), fetch('/tts'), …
 // is upgraded automatically.
 (function () {
-  const APP_TOKEN = window.__APP_TOKEN__ || null;
   const origFetch = window.fetch.bind(window);
 
   function getCookie(name) {
@@ -26,7 +24,7 @@
       return origFetch(input, init); // opaque/unknown — leave alone
     }
 
-    // Only our own origin gets tokens + credentials.
+    // Only our own origin gets the CSRF token + credentials.
     if (url.origin !== location.origin) return origFetch(input, init);
 
     const headers = new Headers(
@@ -34,8 +32,6 @@
       (typeof input !== 'string' && input.headers) ||
       {}
     );
-
-    if (APP_TOKEN) headers.set('x-app-token', APP_TOKEN);
 
     const method = (
       (init && init.method) ||
