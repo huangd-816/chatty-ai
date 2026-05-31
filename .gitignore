@@ -1,2 +1,10 @@
 .env
 node_modules/
+
+# User conversation data — never commit (contains chat history + extracted PII)
+data/*
+!data/.gitkeep
+
+# OS cruft
+.DS_Store
+**/.DS_Store

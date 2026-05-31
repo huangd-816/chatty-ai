@@ -26,7 +26,15 @@
       "Read(//Users/ahuang/**)",
       "Bash(echo 'export PATH=\"$HOME/.npm-global/bin:$PATH\"')",
       "Bash(npm install *)",
-      "Bash(~/.npm-global/bin/claude --version)"
+      "Bash(~/.npm-global/bin/claude --version)",
+      "Bash(awk -F: '$1>2656')",
+      "Bash(mkdir -p ~/.config/ghostty)",
+      "Bash(open -e ~/.config/ghostty/config)",
+      "Bash(git mv *)",
+      "Bash(git rm *)",
+      "Bash(xargs -I{} git rm --cached --quiet \"{}\")",
+      "Bash(git check-ignore *)",
+      "Bash(curl -s __TRACKED_VAR__/get-history?companionId=0816)"
     ]
   },
   "enableAllProjectMcpServers": true,
