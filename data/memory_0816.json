@@ -1,33 +1,35 @@
 {
   "userName": null,
   "affection": 100,
-  "chatCount": 93,
-  "lastInteraction": "2026-05-26T06:29:38.588Z",
+  "chatCount": 124,
+  "lastInteraction": "2026-05-29T13:13:52.158Z",
   "mood": "neutral",
   "topics": [
-    "pets"
+    "pets",
+    "school",
+    "food"
   ],
   "keywords": [
-    "you",
-    "know",
-    "this",
-    "mate",
-    "see?",
-    "get",
+    "food",
+    "nope",
+    "for",
+    "come",
+    "emmm",
+    "how",
+    "to",
+    "streak",
     "what",
-    "can",
-    "see",
-    "i'm",
-    "message",
-    "oi",
-    "there's",
-    "an",
-    "app",
-    "prob",
-    "yeah",
-    "said",
-    "that",
-    "that."
+    "the",
+    "time",
+    "two",
+    "days",
+    "passed",
+    "since",
+    "we",
+    "last",
+    "its",
+    "friday",
+    "now"
   ],
   "sentiment": "positive",
   "preferences": {
@@ -46,111 +48,128 @@
     "user went to sleep at 1:30 am",
     "user said good night",
     "user said 'oi'",
-    "user said 'you said that'"
+    "user said 'you said that'",
+    "user has 666 as their message count",
+    "user is considering getting a new pet",
+    "user is in New Zealand",
+    "Afternoon tea is a thing in New Zealand",
+    "user's sense of humor about animals is on point",
+    "two days have passed since our last conversation"
   ],
   "emotions": [
     {
-      "date": "2026-05-22",
-      "emotion": "curious",
-      "context": "[User sent a GIF/meme — vision analysis: a funny m"
-    },
-    {
-      "date": "2026-05-22",
-      "emotion": "curious",
-      "context": "[User sent a GIF/meme — vision analysis: a funny m"
-    },
-    {
-      "date": "2026-05-22",
-      "emotion": "curious",
-      "context": "[User sent a GIF/meme — vision analysis: a funny m"
-    },
-    {
-      "date": "2026-05-22",
-      "emotion": "user seems neutral",
+      "date": "2026-05-27",
+      "emotion": "playful",
       "context": "AI observed"
     },
     {
-      "date": "2026-05-25",
-      "emotion": "user seemed sleepy",
+      "date": "2026-05-27",
+      "emotion": "neutral",
       "context": "AI observed"
     },
     {
-      "date": "2026-05-25",
-      "emotion": "curious",
-      "context": "what ttyl"
-    },
-    {
-      "date": "2026-05-25",
-      "emotion": "user seemed neutral",
+      "date": "2026-05-27",
+      "emotion": "neutral",
       "context": "AI observed"
     },
     {
-      "date": "2026-05-25",
-      "emotion": "curious",
-      "context": "what did i said before"
-    },
-    {
-      "date": "2026-05-25",
+      "date": "2026-05-27",
       "emotion": "curious",
       "context": "[User sent a GIF/meme — vision analysis: a funny m"
     },
     {
-      "date": "2026-05-25",
+      "date": "2026-05-27",
+      "emotion": "playful",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "playful",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "curious",
+      "context": "no why pets"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "curious",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "supportive",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "curious",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "playful",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "curious",
+      "context": "[User sent a GIF/meme — vision analysis: a funny m"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "playful",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "curious",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "friendly",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-27",
+      "emotion": "playful",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-29",
+      "emotion": "curious",
+      "context": "how to get a streak"
+    },
+    {
+      "date": "2026-05-29",
+      "emotion": "curious",
+      "context": "AI observed"
+    },
+    {
+      "date": "2026-05-29",
       "emotion": "curious",
       "context": "what"
     },
     {
-      "date": "2026-05-25",
+      "date": "2026-05-29",
       "emotion": "curious",
-      "context": "why"
-    },
-    {
-      "date": "2026-05-25",
-      "emotion": "curious",
-      "context": "what did i just say"
-    },
-    {
-      "date": "2026-05-25",
-      "emotion": "curious",
-      "context": "[User sent a GIF/meme — vision analysis: a funny m"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "[User sent a GIF/meme — vision analysis: a funny m"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "what cat"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "what's the time now"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "see?"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "get what"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "can you see what i'm replying to"
-    },
-    {
-      "date": "2026-05-26",
-      "emotion": "curious",
-      "context": "do you know what this app is"
+      "context": "the time?"
     }
   ],
-  "importantMoments": [],
+  "importantMoments": [
+    "user is considering getting a new pet",
+    "user wants to focus on food over drinks",
+    "user is considering getting a new pet",
+    "user shared funny meme with cat",
+    "user is considering getting a new pet",
+    "user is studying math",
+    "user is studying math",
+    "user wants to focus on food over drinks",
+    "user was considering getting a new pet",
+    "user wants to focus on food over drinks"
+  ],
   "personality": {
     "humorLevel": 5,
     "openness": 5,

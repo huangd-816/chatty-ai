@@ -138,7 +138,10 @@
       <div class="speak-bar"></div>
     </div>
   </div>
-  <div class="video-self"><div class="video-self-inner">You</div></div>
+  <div class="video-self">
+    <img id="selfProfilePhoto" class="self-profile-photo" src="" alt="You" style="display:none">
+    <div class="video-self-inner">You</div>
+  </div>
   <div class="video-controls">
     <button class="vid-btn" id="muteBtn" onclick="toggleMute(this)">
       <div class="vid-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
@@ -329,10 +332,7 @@
           <button class="fs-style-btn" data-fstyle="bold" onclick="setFaceStudioStyle(this)">🔥 Bold</button>
           <button class="fs-style-btn" data-fstyle="soft" onclick="setFaceStudioStyle(this)">🌸 Soft</button>
         </div>
-        <div class="fs-upload-row">
-          <button class="fs-upload-btn" onclick="document.getElementById('faceUploadInput').click()">📷 Upload your photo</button>
-          <input type="file" id="faceUploadInput" accept="image/*" style="display:none" onchange="handleFaceUpload(this)">
-        </div>
+
         <button class="fs-apply-btn" onclick="applyFaceStudio()">Use this face →</button>
       </div>
       <button class="modal-create-btn" onclick="createCompanion()">✨ Create</button>

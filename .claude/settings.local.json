@@ -9,7 +9,16 @@
       "Bash(lsof -ti:3000)",
       "Bash(xargs kill -9)",
       "Bash(node *)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(claude doctor *)",
+      "Bash(claude --version)",
+      "Bash(claude update *)",
+      "Bash(npm i *)",
+      "Bash(sudo npm *)",
+      "Bash(python3 -m json.tool)",
+      "Bash(git remote *)",
+      "Bash(awk NR>=1456 && NR<=1460 *)",
+      "Bash(awk NR>=1790 && NR<=1805 *)"
     ]
   },
   "enableAllProjectMcpServers": true,
