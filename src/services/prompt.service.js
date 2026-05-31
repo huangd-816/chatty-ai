@@ -1,7 +1,7 @@
 // Builds the system prompt and the per-turn memory context block.
 // Moved verbatim from server.js (buildSystemPrompt + the inline memoryContext).
 import {
-  PERSONALITY_TRAITS, VIBE_TRAITS, LANG_INSTRUCTIONS, GIF_STYLE,
+  PERSONALITY_TRAITS, VIBE_TRAITS, LANG_INSTRUCTIONS,
 } from '../domain/constants.js';
 
 export function buildSystemPrompt(companion) {
@@ -10,7 +10,6 @@ export function buildSystemPrompt(companion) {
   const vibeDesc = VIBE_TRAITS[vibe] || VIBE_TRAITS.bestie;
   const langInstr = LANG_INSTRUCTIONS[language] || LANG_INSTRUCTIONS.en;
   const genderNote = gender === 'male' ? 'Present as male.' : gender === 'nonbinary' ? 'Gender-neutral.' : 'Present as female.';
-  const gifStyle = (personalities||[]).map(p => GIF_STYLE[p]).filter(Boolean)[0] || 'funny reaction';
   const catchphraseNote = catchphrase
     ? `\nSIGNATURE PHRASE: Your catchphrase is "${catchphrase}" — drop it organically 1-2 times per few messages when it fits the mood. Make it feel natural, not forced. Riff on it, react to it, own it.`
     : '';

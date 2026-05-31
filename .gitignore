@@ -5,6 +5,12 @@ node_modules/
 data/*
 !data/.gitkeep
 
+# Test temp data + reports
+tests/.tmpdata/
+tests/.e2edata/
+test-results/
+playwright-report/
+
 # OS cruft
 .DS_Store
 **/.DS_Store

@@ -6,7 +6,9 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = join(__dirname, '..', '..', 'data');
+// Overridable so tests (and alternate deployments) can point elsewhere.
+const DATA_DIR = process.env.CHATTY_DATA_DIR || join(__dirname, '..', '..', 'data');
+fs.mkdirSync(DATA_DIR, { recursive: true });
 
 // Companion ids are slugs/timestamps like "0816" or "ai_1779798629531".
 // Anything outside this charset could escape the data dir — reject it.

@@ -34,7 +34,15 @@
       "Bash(git rm *)",
       "Bash(xargs -I{} git rm --cached --quiet \"{}\")",
       "Bash(git check-ignore *)",
-      "Bash(curl -s __TRACKED_VAR__/get-history?companionId=0816)"
+      "Bash(curl -s __TRACKED_VAR__/get-history?companionId=0816)",
+      "Bash(npm -v)",
+      "Bash(npx eslint *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(npx tsc *)",
+      "Bash(npx vitest *)",
+      "Bash(npx playwright *)",
+      "Bash(npm run *)",
+      "Bash(echo \"npm run verify EXIT CODE = $?\")"
     ]
   },
   "enableAllProjectMcpServers": true,
