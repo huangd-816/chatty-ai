@@ -226,6 +226,7 @@
     <button class="profile-clear-btn" onclick="exportChat()">📤 Export Chat</button>
     <button class="profile-clear-btn" onclick="clearMemory()" style="margin-top:8px">🗑️ Clear Memory</button>
     <button class="profile-clear-btn" style="background:rgba(255,59,48,0.15);margin-top:8px" onclick="deleteCurrentCompanion()">🗑️ Delete AI</button>
+    <button class="profile-clear-btn" style="margin-top:8px" onclick="authLogout()">🚪 Log out</button>
   </div>
 </div>
 
@@ -347,7 +348,37 @@
   </div>
 </div>
 
+<!-- ══ AUTH OVERLAY ══════════════════════════ -->
+<style>
+  .auth-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 30%,#141426 0%,#07070e 100%);padding:24px;}
+  .auth-card{width:100%;max-width:340px;background:rgba(20,20,32,0.95);border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  .auth-title{font-size:26px;font-weight:800;color:#fff;text-align:center;letter-spacing:-0.5px;}
+  .auth-sub{font-size:13px;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:8px;}
+  .auth-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;
+    padding:13px 14px;color:#f0f0f0;font-size:15px;outline:none;}
+  .auth-input:focus{border-color:#0084FF;}
+  .auth-error{color:#ff5b50;font-size:13px;min-height:16px;text-align:center;}
+  .auth-btn{background:#0084FF;color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;
+    cursor:pointer;}
+  .auth-btn:disabled{opacity:0.5;cursor:default;}
+  .auth-btn-alt{background:rgba(255,255,255,0.08);}
+</style>
+<div class="auth-overlay" id="authOverlay" style="display:flex">
+  <div class="auth-card">
+    <div class="auth-title">chatty-ai</div>
+    <div class="auth-sub">log in or create an account to continue</div>
+    <input id="authUser" class="auth-input" placeholder="username" autocomplete="username" maxlength="30">
+    <input id="authPass" class="auth-input" type="password" placeholder="password" autocomplete="current-password">
+    <div class="auth-error" id="authError"></div>
+    <button class="auth-btn" onclick="authSubmit('login')">Log in</button>
+    <button class="auth-btn auth-btn-alt" onclick="authSubmit('register')">Create account</button>
+  </div>
+</div>
+
 <script src="js/api.js?v=6.9"></script>
+<script src="js/auth.js?v=6.9"></script>
 <script src="js/app.js?v=6.9"></script>
 </body>
 </html>

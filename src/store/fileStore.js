@@ -26,6 +26,20 @@ export function memoryFile(id) {
   return join(DATA_DIR, `memory_${safeId(id)}.json`);
 }
 
+export function usersFile() {
+  return join(DATA_DIR, 'users.json');
+}
+
+export function sessionsFile() {
+  return join(DATA_DIR, 'sessions.json');
+}
+
+// Namespace a companion's storage by the authenticated user, so users can't
+// see or clobber each other's history/memory. Both parts are id-validated.
+export function userScopedId(userId, companionId) {
+  return `${safeId(userId)}__${safeId(companionId || '0816')}`;
+}
+
 export function readJson(file, fallback) {
   try {
     if (!fs.existsSync(file)) return fallback;

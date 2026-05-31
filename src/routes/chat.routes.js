@@ -8,13 +8,14 @@ import { getChatHistory, saveChatHistory } from '../services/history.service.js'
 import { buildSystemPrompt, buildMemoryContext } from '../services/prompt.service.js';
 import { generateChat } from '../services/llm/index.js';
 import { fetchGif } from '../services/giphy.service.js';
+import { userScopedId } from '../store/fileStore.js';
 import { MOOD_POOLS } from '../domain/constants.js';
 
 const router = Router();
 
 router.post('/chat', async (req, res) => {
   const { message, fullMessage, companionId, companion, context } = req.body;
-  const id = companionId || '0816';
+  const id = userScopedId(req.user.id, companionId);
   const aiMessage = fullMessage || message;
 
   const timeContext = context

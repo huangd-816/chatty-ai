@@ -9,7 +9,9 @@ import { dirname, join } from 'path';
 import config from './config.js';
 import { rateLimit } from './middleware/rateLimit.js';
 import { requireToken } from './middleware/auth.js';
+import { parseCookies, attachUser, requireSession, csrfProtect } from './middleware/session.js';
 
+import authRoutes from './routes/auth.routes.js';
 import chatRoutes from './routes/chat.routes.js';
 import historyRoutes from './routes/history.routes.js';
 import mediaRoutes from './routes/media.routes.js';
@@ -34,8 +36,16 @@ function buildIndexHtml() {
 export function createApp() {
   const app = express();
   app.set('trust proxy', true); // so req.ip reflects client behind a proxy
-  app.use(cors());
+
+  // CORS only when an explicit allowlist is configured (credentialed cookies
+  // must never be combined with a wildcard origin). Default: same-origin only.
+  if (config.allowedOrigins.length) {
+    app.use(cors({ origin: config.allowedOrigins, credentials: true }));
+  }
+
   app.use(express.json({ limit: '10mb' }));
+  app.use(parseCookies);
+  app.use(attachUser); // resolve session -> req.user (if any) for all routes
 
   // Serve ONLY the client bundle — never the repo root (no more /.env, /data, /server.js).
   // index:false so we serve index.html ourselves (with token injection) below.
@@ -47,9 +57,14 @@ export function createApp() {
     res.type('html').send(indexHtml);
   });
 
-  // Gate ALL API endpoints behind the optional token (no-op unless APP_TOKEN set).
-  // Placed after static + index so assets and the page itself stay reachable.
-  app.use(requireToken);
+  // Auth endpoints are reachable without a session. Brute-force rate limited.
+  app.use('/auth', rateLimit({ windowMs: 60000, max: 20 }));
+  app.use(authRoutes);
+
+  // ─── API gate (everything below requires a valid session) ───
+  app.use(requireToken);   // optional APP_TOKEN outer gate (no-op unless set)
+  app.use(requireSession); // 401 unless logged in
+  app.use(csrfProtect);    // mutating requests need a valid x-csrf-token
 
   // Generous rate limit on the paid (LLM/TTS) endpoints.
   const paid = rateLimit({ windowMs: 60000, max: 60 });

@@ -14,6 +14,15 @@ const config = {
   // Optional shared-secret gate. When unset, the API stays open (current
   // behavior). When set, requests must send a matching `x-app-token` header.
   appToken: process.env.APP_TOKEN || null,
+
+  // ─── Session auth ───
+  sessionTtlMs: 1000 * 60 * 60 * 24 * 30, // 30 days
+  // Secure cookies require HTTPS. On by default in production; opt-in elsewhere.
+  cookieSecure: process.env.COOKIE_SECURE === 'true' || process.env.NODE_ENV === 'production',
+  // Comma-separated cross-origin allowlist. Empty = same-origin only (no CORS).
+  allowedOrigins: (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean),
+  // Open registration unless explicitly disabled.
+  allowRegistration: process.env.ALLOW_REGISTRATION !== 'false',
 };
 
 // Required for the core chat feature.
