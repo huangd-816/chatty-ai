@@ -2673,12 +2673,16 @@ function setCompanionMood(id, mood) {
 }
 
 function updateStatusRing(mood) {
-  const avatar = document.getElementById('topbarAvatar');
-  if (!avatar) return;
-  const color = MOOD_COLORS[mood] || '#0084FF';
-  avatar.style.boxShadow = `0 0 0 2px ${color}, 0 0 10px ${color}55`;
+  const ring = document.getElementById('topbarStoryRing');
+  if (ring) {
+    const color = MOOD_COLORS[mood] || '#0084FF';
+    ring.style.background = `linear-gradient(135deg, ${color} 0%, #ee2a7b 45%, #6228d7 80%, #00f2ea 100%)`;
+  }
   const sidebarItem = document.querySelector(`.companion-item.active .companion-avatar`);
-  if (sidebarItem) sidebarItem.style.boxShadow = `0 0 0 2px ${color}, 0 0 8px ${color}44`;
+  if (sidebarItem) {
+    const color = MOOD_COLORS[mood] || '#0084FF';
+    sidebarItem.style.boxShadow = `0 0 0 2.5px ${color}, 0 0 12px ${color}55`;
+  }
 }
 
 // ─── XP / LEVEL SYSTEM ────────────────────────
@@ -2710,6 +2714,20 @@ function _refreshXpDisplay(id) {
   if (name) name.textContent = LEVEL_NAMES[lvl] || 'Bonded ✨';
   const sc = document.getElementById('streakCount');
   if (sc) sc.textContent = '🔥 ' + getStreak(id);
+  _refreshTopbarStreak(id);
+}
+
+function _refreshTopbarStreak(id) {
+  const el = document.getElementById('topbarStreak');
+  if (!el) return;
+  const streak = getStreak(id);
+  if (streak > 0) {
+    el.textContent = '🔥 ' + streak;
+    el.classList.add('visible');
+  } else {
+    el.textContent = '';
+    el.classList.remove('visible');
+  }
 }
 
 // ─── DAILY STREAK ─────────────────────────────

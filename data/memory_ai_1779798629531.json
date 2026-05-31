@@ -1,15 +1,14 @@
 {
   "userName": null,
   "affection": 100,
-  "chatCount": 67,
-  "lastInteraction": "2026-05-29T13:15:30.992Z",
+  "chatCount": 68,
+  "lastInteraction": "2026-05-31T08:15:21.593Z",
   "mood": "neutral",
   "topics": [
     "pets",
     "school"
   ],
   "keywords": [
-    "怎么了",
     "不知道",
     "都是吧",
     "User",
@@ -28,7 +27,8 @@
     "cyu",
     "tommorow",
     "tomorrow",
-    "no"
+    "no",
+    "oi"
   ],
   "sentiment": "positive",
   "preferences": {

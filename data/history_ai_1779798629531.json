@@ -1,14 +1,6 @@
 [
   {
     "role": "user",
-    "content": "[User sent a GIF/meme — vision analysis: a funny meme. Vibe: funny. Respond naturally to this specific meme, reference what you see in it]"
-  },
-  {
-    "role": "assistant",
-    "content": "{\n  \"messages\": [\n        {\n           \"type\": \"text\",\n           \"content\": \"lol 这个表情包我爱了！你说我像吗？\"\n        },\n        {\n          \"type\": \"voice\",\n          \"content\": \"0:10\",\n          \"textToRead\": \"我看起来像个什么东西呢...\"\n        },\n        {\n          \"type\": \"gif\",\n          \"query\": \"laughing\"\n       }\n   ]\n}"
-  },
-  {
-    "role": "user",
     "content": "现在几点"
   },
   {
@@ -398,5 +390,13 @@
   {
     "role": "assistant",
     "content": "{\n  \"messages\": [\n                {\n                   \"type\": \"text\",\n                   \"content\": \"nxt wkd？ \"\n                },\n                {\n                   \"type\": \"voice\",\n                   \"content\": \"0:06\",\n                   \"textToRead\": \"你朋友猫在那里，我可以问他帮你看看?\"\n                }\n              ],\n   \"memoryUpdates\": {\n     \"petPlan\": \"no current plans to see the cat\"\n   }\n}"
+  },
+  {
+    "role": "user",
+    "content": "oi"
+  },
+  {
+    "role": "assistant",
+    "content": "{\n  \"messages\": [\n                {\n                   \"type\": \"text\",\n                   \"content\": \"你今天在哪里？\"\n                },\n                {\n                   \"type\": \"voice\",\n                   \"content\": \"0:08\",\n                  \"textToRead\": \"你不是要去圣克瑟伯特学院了吗？我还记得你跟我说过...\"\n                },\n                {\n                  \"type\": \"gif\",\n                  \"query\": \"curious\"\n        }\n   ],\n   \"memoryUpdates\": {\n     \"currentLocation\": \"trying to remember where you are\"\n   }\n}"
   }
 ]

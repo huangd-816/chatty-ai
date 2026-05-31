@@ -36,12 +36,17 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="status" id="currentCompanionStatus">
-        <div class="avatar" id="topbarAvatar">
-          <span class="avatar-emoji" id="topbarEmoji">👻</span>
-          <img id="topbarAvatarPhoto" class="avatar-photo-img" src="" alt="" style="display:none">
+        <div class="avatar-story-ring" id="topbarStoryRing">
+          <div class="avatar" id="topbarAvatar">
+            <span class="avatar-emoji" id="topbarEmoji">👻</span>
+            <img id="topbarAvatarPhoto" class="avatar-photo-img" src="" alt="" style="display:none">
+          </div>
         </div>
         <div class="status-info">
-          <div class="name" id="topbarName">0816</div>
+          <div class="name-streak-row">
+            <div class="name" id="topbarName">0816</div>
+            <span class="topbar-streak" id="topbarStreak"></span>
+          </div>
           <div class="online"><span class="dot" id="statusDot"></span><span id="statusText">Active now</span></div>
         </div>
       </div>
@@ -129,7 +134,7 @@
       <img id="callPortraitImg" src="" alt="" />
     </div>
     <!-- Generated mode: canvas drawing (default fallback) -->
-    <canvas id="callFaceCanvas" width="230" height="310"></canvas>
+    <canvas id="callFaceCanvas" width="280" height="380"></canvas>
     <div class="video-name" id="callName">0816</div>
     <div class="video-status" id="videoStatus">Connecting...</div>
     <div class="call-speak-indicator" id="callSpeakIndicator">
