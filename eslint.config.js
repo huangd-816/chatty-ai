@@ -41,4 +41,19 @@ export default [
     },
     rules: shared,
   },
+  {
+    // e2e specs mix Node test code with browser page.evaluate() callbacks.
+    files: ['tests/e2e/**/*.js'],
+    languageOptions: { globals: { ...globals.browser } },
+  },
+  {
+    // Browser ES modules (Phase 2 extraction).
+    files: ['public/js/state.js', 'public/js/utils.js', 'public/js/gamification.js', 'public/js/bootstrap.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: { ...globals.browser },
+    },
+    rules: shared,
+  },
 ];

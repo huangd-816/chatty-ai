@@ -378,6 +378,9 @@
 
 <script src="js/api.js?v=6.9"></script>
 <script src="js/auth.js?v=6.9"></script>
-<script src="js/app.js?v=6.9"></script>
+<!-- ES modules (state/utils/gamification) republished on window, then the
+     classic app.js. Both deferred -> bootstrap runs first, app.js second. -->
+<script type="module" src="js/bootstrap.js?v=7.0"></script>
+<script defer src="js/app.js?v=7.0"></script>
 </body>
 </html>

@@ -1,29 +1,8 @@
-console.log("chatty-ai v6.0 - Multi-Companion");
+console.log("chatty-ai v7.0 - Multi-Companion");
 
-// ─── COMPANIONS ────────────────────────────────
-let companions = JSON.parse(localStorage.getItem('chatty-ai_companions') || 'null');
-if (!companions) {
-  companions = [{
-    id: '0816', name: '0816', avatar: '👻',
-    personalities: ['bff'], vibe: 'bestie',
-    language: 'en', gender: 'female',
-    created: Date.now(), lastMessage: 'hey! 👋', lastTime: Date.now()
-  }];
-  saveCompanions();
-}
-let currentId = localStorage.getItem('chatty-ai_current') || companions[0].id;
-
-function saveCompanions() {
-  localStorage.setItem('chatty-ai_companions', JSON.stringify(companions));
-}
-
-function getCompanion(id) {
-  return companions.find(c => c.id === id) || companions[0];
-}
-
-function getCurrentCompanion() {
-  return getCompanion(currentId);
-}
+// State (state.companions, state.currentId), helpers (saveCompanions, getCompanion,
+// getCurrentCompanion) and chatCaches now live in state.js, exposed on window
+// by bootstrap.js. Referenced here as state.companions / state.currentId.
 
 // ─── MODAL STATE ──────────────────────────────
 let modalAvatar = '👻';
@@ -553,7 +532,7 @@ function createCompanion() {
     showToast('Updated ' + name + ' ✨');
   } else {
     const id = 'ai_' + Date.now();
-    companions.push({
+    state.companions.push({
       id, name, avatar: modalAvatar, personalities: modalPersonalities,
       vibe: modalVibe, language: modalLang, gender: modalGender,
       voiceStyle: modalVoiceStyle, facePreset: modalFacePreset,
@@ -572,12 +551,12 @@ function createCompanion() {
 }
 
 function deleteCurrentCompanion() {
-  if (companions.length <= 1) { showToast("Can't delete last AI!"); return; }
+  if (state.companions.length <= 1) { showToast("Can't delete last AI!"); return; }
   if (!confirm('Delete this AI? All memory will be lost.')) return;
-  companions = companions.filter(c => c.id !== currentId);
+  state.companions = state.companions.filter(c => c.id !== state.currentId);
   saveCompanions();
   renderSidebar();
-  switchCompanion(companions[0].id);
+  switchCompanion(state.companions[0].id);
   closeScreen('profile');
 }
 
@@ -585,13 +564,13 @@ function deleteCurrentCompanion() {
 function renderSidebar(filter = '') {
   const list = document.getElementById('companionsList');
   list.innerHTML = '';
-  const filtered = companions.filter(c =>
+  const filtered = state.companions.filter(c =>
     c.name.toLowerCase().includes(filter.toLowerCase())
   ).sort((a, b) => b.lastTime - a.lastTime);
 
   filtered.forEach(c => {
     const item = document.createElement('div');
-    item.className = 'companion-item' + (c.id === currentId ? ' active' : '');
+    item.className = 'companion-item' + (c.id === state.currentId ? ' active' : '');
     item.onclick = () => switchCompanion(c.id);
     const time = c.lastTime ? formatTime(c.lastTime) : '';
     const personalities = (c.personalities || []).slice(0, 2).join(', ');
@@ -616,22 +595,13 @@ function renderSidebar(filter = '') {
 
 function filterCompanions(val) { renderSidebar(val); }
 
-function formatTime(ts) {
-  const d = new Date(ts), now = new Date();
-  if (d.toDateString() === now.toDateString()) {
-    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-  return d.toLocaleDateString([], { weekday: 'short' });
-}
-
-// ─── CHAT CACHES ──────────────────────────────
-const chatCaches = {};
+// formatTime -> utils.js, chatCaches -> state.js (both on window via bootstrap)
 
 function switchCompanion(id) {
   // Save current chat DOM
-  if (currentId) chatCaches[currentId] = document.getElementById('chat').innerHTML;
+  if (state.currentId) chatCaches[state.currentId] = document.getElementById('chat').innerHTML;
 
-  currentId = id;
+  state.currentId = id;
   localStorage.setItem('chatty-ai_current', id);
   savedGifs = JSON.parse(localStorage.getItem(`${id}_saved_gifs`) || '[]');
 
@@ -678,10 +648,7 @@ function switchCompanion(id) {
   scrollToBottom();
 }
 
-function avatarColor(emoji) {
-  const colors = { '👻': '#0084FF', '🐱': '#FF9500', '🦊': '#FF6B35', '🐺': '#636366', '🐰': '#FF2D55', '🐸': '#30D158', '🦋': '#BF5AF2', '🌙': '#5E5CE6', '⭐': '#FFD60A', '🔥': '#FF3B30', '💎': '#32ADE6', '🌸': '#FF6B9D' };
-  return colors[emoji] || '#0084FF';
-}
+// avatarColor -> utils.js (on window via bootstrap)
 
 function showSidebar() {
   document.getElementById('sidebar').classList.add('sidebar-active');
@@ -741,7 +708,7 @@ function langLabel(l) {
 }
 
 function updateProfileStats() {
-  const memory = JSON.parse(localStorage.getItem(`${currentId}_profile`) || '{}');
+  const memory = JSON.parse(localStorage.getItem(`${state.currentId}_profile`) || '{}');
   document.getElementById('statChats').textContent = memory.chatCount || 0;
   document.getElementById('statAffection').textContent = memory.affection || 0;
   document.getElementById('statSaved').textContent = savedGifs.length;
@@ -749,8 +716,8 @@ function updateProfileStats() {
 
 function clearMemory() {
   if (confirm('Clear all chat memory?')) {
-    fetch('/clear-memory', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ companionId: currentId }) })
-      .then(() => { showToast('Memory cleared 🗑️'); chatCaches[currentId] = ''; document.getElementById('chat').innerHTML = ''; });
+    fetch('/clear-memory', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ companionId: state.currentId }) })
+      .then(() => { showToast('Memory cleared 🗑️'); chatCaches[state.currentId] = ''; document.getElementById('chat').innerHTML = ''; });
   }
 }
 
@@ -1454,13 +1421,7 @@ function _drawAnimeAccessories(ctx, cx, faceY, faceW, faceH, st, preset) {
 }
 
 
-function lightenColor(hex, amount) {
-  const num = parseInt(hex.replace('#',''), 16);
-  const r = Math.min(255, (num >> 16) + amount);
-  const g = Math.min(255, ((num >> 8) & 0xff) + amount);
-  const b = Math.min(255, (num & 0xff) + amount);
-  return `rgb(${r},${g},${b})`;
-}
+// lightenColor -> utils.js (on window via bootstrap)
 
 function updateCallPortrait() {
   const c = getCurrentCompanion();
@@ -1706,19 +1667,19 @@ function toggleCamera(btn) {
 }
 
 // ─── SAVED GIFS ───────────────────────────────
-let savedGifs = JSON.parse(localStorage.getItem(`${currentId}_saved_gifs`) || '[]');
+let savedGifs = JSON.parse(localStorage.getItem(`${state.currentId}_saved_gifs`) || '[]');
 
 function saveGif(url, title) {
   if (savedGifs.find(g => g.url === url)) { showToast('Already saved!'); return; }
   savedGifs.unshift({ url, title, savedAt: Date.now() });
   if (savedGifs.length > 50) savedGifs = savedGifs.slice(0, 50);
-  localStorage.setItem(`${currentId}_saved_gifs`, JSON.stringify(savedGifs));
+  localStorage.setItem(`${state.currentId}_saved_gifs`, JSON.stringify(savedGifs));
   showToast('GIF saved! 💾');
 }
 
 function deleteSavedGif(url) {
   savedGifs = savedGifs.filter(g => g.url !== url);
-  localStorage.setItem(`${currentId}_saved_gifs`, JSON.stringify(savedGifs));
+  localStorage.setItem(`${state.currentId}_saved_gifs`, JSON.stringify(savedGifs));
   renderSavedGifs();
   renderSavedGifsInPicker();
   updateProfileStats();
@@ -1745,13 +1706,7 @@ function sendSavedGif(url, title) {
   sendToAI('[User sent a saved GIF: ' + (title||'meme') + ']');
 }
 
-// ─── TOAST ────────────────────────────────────
-function showToast(msg) {
-  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(() => t.classList.add('toast-show'), 10);
-  setTimeout(() => { t.classList.remove('toast-show'); setTimeout(() => t.remove(), 300); }, 2200);
-}
+// showToast -> utils.js (on window via bootstrap)
 
 // ─── VOICE (ElevenLabs) ───────────────────────
 let voicePlaying = false;
@@ -1941,15 +1896,7 @@ function createGifActions(gifUrl, title) {
 }
 
 
-// ─── CUSTOM CONFIRM ───────────────────────────
-function showConfirm(message, onConfirm) {
-  const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;';
-  overlay.innerHTML = `<div style="background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;width:280px;text-align:center;"><div style="font-size:15px;color:#f0f0f0;margin-bottom:20px;">${message}</div><div style="display:flex;gap:10px;"><button id="confirmCancel" style="flex:1;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#f0f0f0;cursor:pointer;font-size:14px;">Cancel</button><button id="confirmOk" style="flex:1;padding:10px;border-radius:12px;border:none;background:#ff3b30;color:#fff;cursor:pointer;font-size:14px;font-weight:600;">Delete</button></div></div>`;
-  document.body.appendChild(overlay);
-  overlay.querySelector('#confirmCancel').onclick = () => overlay.remove();
-  overlay.querySelector('#confirmOk').onclick = () => { overlay.remove(); onConfirm(); };
-}
+// showConfirm -> utils.js (on window via bootstrap)
 
 
 // ─── MULTI-SELECT DELETE ──────────────────────
@@ -2000,7 +1947,7 @@ function deleteSelected() {
     toggleSelectMode();
     setTimeout(() => {
       saveChatToStorage();
-      chatCaches[currentId] = '';
+      chatCaches[state.currentId] = '';
     }, 300);
   });
 }
@@ -2141,7 +2088,7 @@ function renderMessage(item, sender) {
   delBtn.style.cssText = 'background:rgba(255,59,48,0.08);border-color:rgba(255,59,48,0.2);';
   delBtn.onclick = () => showConfirm('Delete this message?', () => {
     row.style.opacity = '0'; row.style.transform = 'scale(0.9)'; row.style.transition = 'all 0.2s';
-    setTimeout(() => { row.remove(); saveChatToStorage(); chatCaches[currentId] = ''; }, 200);
+    setTimeout(() => { row.remove(); saveChatToStorage(); chatCaches[state.currentId] = ''; }, 200);
   });
   actEl.appendChild(delBtn);
 
@@ -2178,10 +2125,9 @@ function renderMessage(item, sender) {
   chat.appendChild(row); scrollToBottom();
 }
 
-function escapeHtml(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// escapeHtml + _voicePlaceholderRE -> utils.js (on window via bootstrap)
 
 // ─── VOICE BAR ────────────────────────────────
-const _voicePlaceholderRE = /^(spoken version|placeholder|\[.*\]|0:\d\d)$/i;
 function playVoiceBar(btn) {
   let el = btn;
   while (el && !el.classList.contains('msg-voice')) el = el.parentElement;
@@ -2334,11 +2280,11 @@ async function sendToAI(text, originalText) {
 
     // Gamification + UX
     const hasVoice = (data.messages||[]).some(m => m.type === 'voice');
-    addXp(currentId, hasVoice ? 15 : 10);
-    updateStreak(currentId);
+    addXp(state.currentId, hasVoice ? 15 : 10);
+    updateStreak(state.currentId);
     playChime();
     const firstText = (data.messages||[]).find(m => m.type === 'text')?.content || '';
-    setCompanionMood(currentId, detectMood(firstText));
+    setCompanionMood(state.currentId, detectMood(firstText));
 
     // Update last message from AI
     if (data.messages?.[0]?.type === 'text') {
@@ -2403,7 +2349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // On mobile, start at sidebar; on desktop show chat
   if (window.innerWidth > 640) {
-    switchCompanion(currentId);
+    switchCompanion(state.currentId);
     document.getElementById('chatPanel').classList.add('panel-active');
   } else {
     document.getElementById('sidebar').classList.add('sidebar-active');
@@ -2415,7 +2361,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function deleteMessage(row) {
   if (!confirm('Delete this message?')) return;
   row.style.animation = 'msgOut 0.2s ease forwards';
-  setTimeout(() => { row.remove(); saveChatToStorage(); chatCaches[currentId] = ''; }, 200);
+  setTimeout(() => { row.remove(); saveChatToStorage(); chatCaches[state.currentId] = ''; }, 200);
 }
 
 function editMessage(row, originalText) {
@@ -2551,7 +2497,7 @@ function saveChatToStorage() {
     }
     else if (imgEl && imgEl.src) messages.push({ type: 'image', sender, content: imgEl.src, isGif: true, title: imgEl.title });
   });
-  stored[currentId] = messages.slice(-60); // keep last 60
+  stored[state.currentId] = messages.slice(-60); // keep last 60
   localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(stored));
 }
 
@@ -2568,27 +2514,7 @@ function loadChatFromStorage(id) {
   });
 }
 // ─── PHOTO UPLOADS ────────────────────────────
-function compressPhoto(file, maxSize, cb) {
-  if (file.type === 'image/gif') {
-    if (file.size > 3 * 1024 * 1024) { showToast('GIF too large (max 3MB)'); return; }
-    const r = new FileReader(); r.onload = e => cb(e.target.result); r.readAsDataURL(file);
-    return;
-  }
-  const r = new FileReader();
-  r.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      const ratio = Math.min(maxSize / img.width, maxSize / img.height, 1);
-      const w = Math.round(img.width * ratio), h = Math.round(img.height * ratio);
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      try { cb(canvas.toDataURL('image/jpeg', 0.82)); } catch { cb(e.target.result); }
-    };
-    img.src = e.target.result;
-  };
-  r.readAsDataURL(file);
-}
+// compressPhoto -> utils.js (on window via bootstrap)
 
 // ── User profile photo ──
 function getUserPhoto() { return localStorage.getItem('chatty-ai_user_photo') || ''; }
@@ -2669,7 +2595,7 @@ function setCompanionMood(id, mood) {
   if (!c || c.mood === mood) return;
   c.mood = mood;
   saveCompanions();
-  if (id === currentId) updateStatusRing(mood);
+  if (id === state.currentId) updateStatusRing(mood);
 }
 
 function updateStatusRing(mood) {
@@ -2685,83 +2611,8 @@ function updateStatusRing(mood) {
   }
 }
 
-// ─── XP / LEVEL SYSTEM ────────────────────────
-const XP_THRESHOLDS = [0, 100, 250, 500, 900, 1400, 2000];
-const LEVEL_NAMES   = ['Strangers', 'Acquaintances', 'Friends', 'Close Friends', 'Best Friends', 'Soulmates', 'Bonded ✨'];
-
-function getXpData(id)       { return JSON.parse(localStorage.getItem(`chatty-xp-${id}`) || '{"xp":0,"level":0}'); }
-function saveXpData(id, data){ localStorage.setItem(`chatty-xp-${id}`, JSON.stringify(data)); }
-
-function addXp(id, amount) {
-  const data = getXpData(id);
-  data.xp += amount;
-  const oldLevel = data.level;
-  while (data.level < XP_THRESHOLDS.length - 1 && data.xp >= XP_THRESHOLDS[data.level + 1]) data.level++;
-  saveXpData(id, data);
-  if (data.level > oldLevel) showToast(`💫 Level up! Now: ${LEVEL_NAMES[data.level] || 'Bonded'}`);
-  if (id === currentId) _refreshXpDisplay(id);
-}
-
-function _refreshXpDisplay(id) {
-  const data = getXpData(id);
-  const lvl = data.level;
-  const prev = XP_THRESHOLDS[lvl] || 0;
-  const next = XP_THRESHOLDS[lvl + 1];
-  const pct  = next ? Math.min(100, ((data.xp - prev) / (next - prev)) * 100) : 100;
-  const fill = document.getElementById('xpBarFill');
-  const name = document.getElementById('xpLevelName');
-  if (fill) fill.style.width = pct + '%';
-  if (name) name.textContent = LEVEL_NAMES[lvl] || 'Bonded ✨';
-  const sc = document.getElementById('streakCount');
-  if (sc) sc.textContent = '🔥 ' + getStreak(id);
-  _refreshTopbarStreak(id);
-}
-
-function _refreshTopbarStreak(id) {
-  const el = document.getElementById('topbarStreak');
-  if (!el) return;
-  const streak = getStreak(id);
-  if (streak > 0) {
-    el.textContent = '🔥 ' + streak;
-    el.classList.add('visible');
-  } else {
-    el.textContent = '';
-    el.classList.remove('visible');
-  }
-}
-
-// ─── DAILY STREAK ─────────────────────────────
-function updateStreak(id) {
-  const key = `chatty-streak-${id}`;
-  const data = JSON.parse(localStorage.getItem(key) || '{"streak":0,"lastDate":""}');
-  const today = new Date().toDateString();
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-  if (data.lastDate === today) return;
-  data.streak = (data.lastDate === yesterday) ? data.streak + 1 : 1;
-  data.lastDate = today;
-  localStorage.setItem(key, JSON.stringify(data));
-  if (data.streak > 1) showToast(`🔥 ${data.streak} day streak!`);
-}
-function getStreak(id) { return JSON.parse(localStorage.getItem(`chatty-streak-${id}`) || '{"streak":0}').streak || 0; }
-
-// ─── NOTIFICATION CHIME ───────────────────────
-let _audioCtx = null;
-function playChime() {
-  try {
-    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const ctx = _audioCtx;
-    [[523.25, 0], [659.25, 0.1], [783.99, 0.2]].forEach(([freq, delay]) => {
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.frequency.value = freq; osc.type = 'sine';
-      const t = ctx.currentTime + delay;
-      gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(0.15, t + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-      osc.start(t); osc.stop(t + 0.55);
-    });
-  } catch {}
-}
+// XP/level, daily streak, and playChime -> gamification.js + utils.js
+// (all exposed on window via bootstrap)
 
 // ─── CHAT BACKGROUND THEMES ───────────────────
 const BG_THEMES = {

@@ -42,7 +42,9 @@
       "Bash(npx vitest *)",
       "Bash(npx playwright *)",
       "Bash(npm run *)",
-      "Bash(echo \"npm run verify EXIT CODE = $?\")"
+      "Bash(echo \"npm run verify EXIT CODE = $?\")",
+      "Bash(grep -nE '\\\\b__TRACKED_VAR__\\\\b' public/js/app.js)",
+      "Bash(echo \"npm run verify EXIT=$?\")"
     ]
   },
   "enableAllProjectMcpServers": true,
